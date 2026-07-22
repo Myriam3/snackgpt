@@ -32,7 +32,6 @@
       <%= yield %>
     </main>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render "shared/flashes" %>
   </body>
 </html>

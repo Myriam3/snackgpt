@@ -1,2 +1,11 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container">
+  <h1 class="mt-5">SnackGPT</h1>
+  <% if user_signed_in? %>
+    <p>Welcome!</p>
+  <% else %>
+    <div class="btn-group mt-3">
+      <%= link_to "Login", new_user_session_path, class: "btn btn-primary mx-1" %>
+      <%= link_to "Sign up", new_user_registration_path, class: "btn btn-dark mx-1" %>
+    </div>
+  <% end %>
+</div>
