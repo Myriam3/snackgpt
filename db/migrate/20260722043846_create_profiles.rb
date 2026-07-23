@@ -8,6 +8,8 @@ class CreateProfiles < ActiveRecord::Migration[8.1]
       t.integer :gender
       t.integer :activity_level
       t.integer :goal
+      t.text :preferences
+      t.text :conditions
 
       t.timestamps
     end

@@ -1,10 +1,6 @@
 class Profile < ApplicationRecord
   has_many :user_allergies, dependent: :destroy
   has_many :allergies, through: :user_allergies
-  has_many :user_conditions, dependent: :destroy
-  has_many :conditions, through: :user_conditions
-  has_many :user_preferences, dependent: :destroy
-  has_many :preferences, through: :user_preferences
   has_many :user_cooking_devices, dependent: :destroy
   has_many :cooking_devices, through: :user_cooking_devices
   validates :name, :birthday, :weight, :height, :gender, :goal, :activity_level, presence: true
@@ -17,14 +13,6 @@ class Profile < ApplicationRecord
 
   def must_have_allergy
     errors.add(:allergies, "Must select at least one") if allergies.empty?
-  end
-
-  def must_have_condition
-    errors.add(:conditions, "Must select at least one") if conditions.empty?
-  end
-
-  def must_have_preference
-    errors.add(:preferences, "Must select at least one") if preferences.empty?
   end
 
   def must_have_cooking_device

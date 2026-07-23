@@ -7,3 +7,40 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+puts "Cleaning database..."
+
+Allergy.destroy_all
+CookingDevice.destroy_all
+
+puts "Creating allergies..."
+
+[
+  "Peanuts",
+  "Tree Nuts",
+  "Milk",
+  "Eggs",
+  "Soy",
+  "Wheat",
+  "Fish",
+  "Shellfish",
+  "Sesame"
+].each do |name|
+  Allergy.create!(name: name)
+end
+
+puts "Creating cooking devices..."
+
+[
+  "Oven",
+  "Microwave",
+  "Air Fryer",
+  "Rice Cooker",
+  "Blender",
+  "Pressure Cooker",
+  "Slow Cooker",
+  "Stovetop"
+].each do |name|
+  CookingDevice.create!(name: name)
+end
+
+puts "Done!"
