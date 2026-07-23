@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_23_074141) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_23_075658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -135,7 +135,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_074141) do
     t.string "name"
     t.text "preferences"
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.integer "weight"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "user_allergies", force: :cascade do |t|
@@ -176,6 +178,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_074141) do
   add_foreign_key "daily_objectives", "profiles"
   add_foreign_key "meals", "profiles"
   add_foreign_key "messages", "chats"
+  add_foreign_key "profiles", "users"
   add_foreign_key "user_allergies", "allergies"
   add_foreign_key "user_allergies", "profiles"
   add_foreign_key "user_cooking_devices", "cooking_devices"

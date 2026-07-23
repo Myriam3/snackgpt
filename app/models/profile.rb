@@ -8,6 +8,7 @@ class Profile < ApplicationRecord
   validate :must_have_condition
   validate :must_have_preference
   validate :must_have_cooking_device
+  belongs_to :user
 
   private
 
