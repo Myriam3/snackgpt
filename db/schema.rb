@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_045545) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_23_074141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_045545) do
     t.index ["movie_id"], name: "index_bookmarks_on_movie_id"
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_chats_on_user_id"
+  end
+
   create_table "cooking_devices", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -96,6 +104,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_045545) do
     t.integer "protein"
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_meals_on_profile_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -155,8 +172,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_045545) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarks", "lists"
   add_foreign_key "bookmarks", "movies"
+  add_foreign_key "chats", "users"
   add_foreign_key "daily_objectives", "profiles"
   add_foreign_key "meals", "profiles"
+  add_foreign_key "messages", "chats"
   add_foreign_key "user_allergies", "allergies"
   add_foreign_key "user_allergies", "profiles"
   add_foreign_key "user_cooking_devices", "cooking_devices"
