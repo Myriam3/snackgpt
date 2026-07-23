@@ -24,9 +24,14 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <%= render "shared/navbar" %>
+    </header>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <main>
+      <%= yield %>
+    </main>
+
+    <%= render "shared/flashes" %>
   </body>
 </html>
