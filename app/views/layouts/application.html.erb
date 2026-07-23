@@ -24,6 +24,14 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <%= render "shared/navbar" %>
+    </header>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <%= render "shared/flashes" %>
   </body>
 </html>
