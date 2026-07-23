@@ -1,0 +1,55 @@
+<div data-controller="profile-form">
+  <%= simple_form_for profile, url: profile_path do |f| %>
+    <div data-profile-form-target="step">
+      <%= f.input :name %>
+      <%= f.input :birthday %>
+      <%= f.input :weight %>
+      <%= f.input :height %>
+      <%= f.input :gender, as: :radio_buttons, collection: Profile.genders.keys.map { |g| [g.humanize, g] } %>
+      <%= button_tag "Next", type: "button", data: { action: "profile-form#next" } %>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.association :allergies, as: :check_boxes %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.association :cooking_devices, as: :check_boxes %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :preferences %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :conditions %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :activity_level, as: :radio_buttons, collection: Profile.activity_levels.keys.map { |g| [g.humanize, g] } %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :goal, as: :radio_buttons, collection: Profile.goals.keys.map { |g| [g.humanize, g] } %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= f.button :submit, "Finish" %>
+      </div>
+    </div>
+  <% end %>
+</div>
