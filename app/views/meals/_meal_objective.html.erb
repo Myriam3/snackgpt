@@ -1,0 +1,47 @@
+<%
+  calories_percent = meal.calories * 100 / @daily_objective.calories
+  protein_percent = meal.protein * 100 / @daily_objective.protein
+  carbs_percent = meal.carbs * 100 / @daily_objective.carbs
+  fats_percent = meal.fats * 100 / @daily_objective.fats
+%>
+
+<dl class="list-unstyled mb-0 container">
+  <div class="row">
+    <div class="d-flex p-0">
+      <dt class="m-1">Calories:</td>
+      <dd class="m-1"><%= meal.calories %></dd>
+    </div>
+    <div class="progress p-0">
+      <div class="progress-bar" role="progressbar" style="width: <%= calories_percent %>%;" aria-valuenow="<%= calories_percent %>" aria-valuemin="0" aria-valuemax="100"><%= calories_percent %>%</div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <dt>Protein:</td>
+      <dd class="m-0"><%= meal.protein %></dd>
+      <dd>
+        <div class="progress p-0">
+          <div class="progress-bar" role="progressbar" style="width: <%= protein_percent %>%;" aria-valuenow="<%= protein_percent %>" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </dd>
+    </div>
+    <div class="col">
+      <dt>Carbs:</td>
+      <dd class="m-0"><%= meal.carbs %></dd>
+      <dd>
+        <div class="progress p-0">
+          <div class="progress-bar" role="progressbar" style="width: <%= carbs_percent %>%;" aria-valuenow="<%= carbs_percent %>" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </dd>
+    </div>
+    <div class="col">
+      <dt>Fats:</td>
+      <dd class="m-0"><%= meal.fats %></dd>
+      <dd>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" style="width: <%= fats_percent %>%;" aria-valuenow="<%= fats_percent %>" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </dd>
+    </div>
+  </div>
+</dl>

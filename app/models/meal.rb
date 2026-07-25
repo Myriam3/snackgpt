@@ -4,8 +4,8 @@ class Meal < ApplicationRecord
 
   enum :meal_type, {
     breakfast: 0,
-    lunch: 1,
     brunch: 2,
+    lunch: 1,
     snack: 3,
     dinner: 4
   }

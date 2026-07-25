@@ -1,4 +1,5 @@
 class Profile < ApplicationRecord
+  has_one :daily_objective
   has_many :meals
   has_many :user_allergies, dependent: :destroy
   has_many :allergies, through: :user_allergies
