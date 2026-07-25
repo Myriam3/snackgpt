@@ -44,3 +44,28 @@ puts "Creating cooking devices..."
 end
 
 puts "Done!"
+
+
+puts "seeding users"
+
+User.find_or_create_by!(email: "cammyfitness@example.com") do |user|
+  user.password = "SecurePassword123"
+  user.password_confirmation = "SecurePassword123"
+
+  user.skip_confirmation! if user.respond_to?(:skip_confirmation!)
+end
+
+puts "Seeding completed successfully!"
+
+Profile.create!(
+  user: user,
+  gender: 2
+  birthday: Date.new(1995, 5, 14)
+  activity_level 2,
+  diet_goals: "Muscle gain",
+  height: 175.5, # in centimeters
+  weight: 68.0   # in kilograms
+  allergies: "Shellfish"
+)
+
+puts "Successfully seeded 1 user and profile!"
