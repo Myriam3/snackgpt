@@ -15,4 +15,7 @@ Rails.application.routes.draw do
 
   # Meals
   get "/meals/", to: "meals#index"
+  get "/profile", to: "profiles#index", as: :profile
+  get "/profile/new", to: "profiles#new"
+  post "profile", to: "profiles#create"
 end
