@@ -1,3 +1,5 @@
+# require "nutrition_plan_generator"
+
 class ProfilesController < ApplicationController
   def index
     @profile = current_user.profile
@@ -7,14 +9,9 @@ class ProfilesController < ApplicationController
       return
     end
 
-    @daily_objective = {
-      calories: 2200,
-      protein: 150,
-      carbs: 250,
-      fats: 70
-    }
-
-    @diet_suggestion = "Focus on balanced meals with protein, vegetables, and whole-food carbohydrates."
+    @response = NutritionPlanGenerator.new(@profile).call
+    # @daily_objectives = @profile.daily_objectives
+    # @meals = @profile.meals
   end
 
   def new
@@ -25,6 +22,8 @@ class ProfilesController < ApplicationController
   def create
     @profile = current_user.build_profile(profile_params)
     if @profile.save
+      # nutrition_plan = NutritionPlanGenerator.new(@profile).call
+      # NutritionPlanSaver.new(@profile, nutrition_plan).call
       redirect_to profile_path
     else
       render :new, status: :unprocessable_entity

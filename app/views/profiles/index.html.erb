@@ -21,28 +21,31 @@
     <ul>
       <li>
         <strong>Calories:</strong>
-        <%= @daily_objective[:calories] %> kcal
+        <%= @response["daily_objectives"]["calories"] %> kcal
       </li>
 
       <li>
         <strong>Protein:</strong>
-        <%= @daily_objective[:protein] %> g
+        <%= @response["daily_objectives"]["protein_g"] %> g
       </li>
 
       <li>
         <strong>Carbohydrates:</strong>
-        <%= @daily_objective[:carbs] %> g
+        <%= @response["daily_objectives"]["carbs_g"] %> g
       </li>
 
       <li>
         <strong>Fats:</strong>
-        <%= @daily_objective[:fats] %> g
+        <%= @response["daily_objectives"]["fat_g"] %> g
       </li>
     </ul>
   </section>
 
   <section>
     <h2>Your Diet Suggestion</h2>
-    <p><%= @diet_suggestion %></p>
+    <p><%= @response["nutrition_summary"] %></p>
   </section>
+  <div>
+    <%= @response %>
+  </div>
 </div>
