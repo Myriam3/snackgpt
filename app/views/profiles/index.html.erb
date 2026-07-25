@@ -1,3 +1,54 @@
+<div data-controller="clear-session">
+  <h1>Your Nutrition Plan</h1>
+
+  <section>
+    <h2>Hello, <%= @profile.name %></h2>
+
+    <p>
+      <strong>Goal:</strong>
+      <%= @profile.goal.humanize %>
+    </p>
+
+    <p>
+      <strong>Activity level:</strong>
+      <%= @profile.activity_level.humanize %>
+    </p>
+  </section>
+
+  <section>
+    <h2>Your Daily Objectives</h2>
+
+    <ul>
+      <li>
+        <strong>Calories:</strong>
+        <%= @response["daily_objectives"]["calories"] %> kcal
+      </li>
+
+      <li>
+        <strong>Protein:</strong>
+        <%= @response["daily_objectives"]["protein_g"] %> g
+      </li>
+
+      <li>
+        <strong>Carbohydrates:</strong>
+        <%= @response["daily_objectives"]["carbs_g"] %> g
+      </li>
+
+      <li>
+        <strong>Fats:</strong>
+        <%= @response["daily_objectives"]["fat_g"] %> g
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Your Diet Suggestion</h2>
+    <p><%= @response["nutrition_summary"] %></p>
+  </section>
+  <div>
+    <%= @response %>
+  </div>
+</div>
 <% content_for :title, "Today | SnackGPT" %>
 
 <%

@@ -6,6 +6,8 @@ class Profile < ApplicationRecord
   validates :name, :birthday, :weight, :height, :gender, :goal, :activity_level, presence: true
   validate :must_have_cooking_device
   belongs_to :user
+  has_one :daily_objective, dependent: :destroy
+  has_many :meals, dependent: :destroy
 
   enum :gender, {
     male: 0,
@@ -29,6 +31,15 @@ class Profile < ApplicationRecord
     very_active: 3,
     athlete: 4
   }
+
+  def age
+    return unless birthday
+
+    today = Date.current
+    age = today.year - birthday.year
+    age -= 1 if birthday.to_date.change(year: today.year) > today
+    age
+  end
 
   private
 
