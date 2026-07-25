@@ -57,28 +57,28 @@
   objective_cards = [
     {
       label: "Calories",
-      value: @daily_objective[:calories],
+      value: @response["daily_objectives"]["calories"],
       unit: "kcal",
       icon: "🔥",
       accent: "paprika"
     },
     {
       label: "Protein",
-      value: @daily_objective[:protein],
+      value: @response["daily_objectives"]["protein"],
       unit: "g",
       icon: "💪",
       accent: "moss"
     },
     {
       label: "Carbs",
-      value: @daily_objective[:carbs],
+      value: @response["daily_objectives"]["carbs"],
       unit: "g",
       icon: "🌾",
       accent: "honey"
     },
     {
       label: "Fats",
-      value: @daily_objective[:fats],
+      value: @response["daily_objectives"]["fats"],
       unit: "g",
       icon: "💧",
       accent: "mint"

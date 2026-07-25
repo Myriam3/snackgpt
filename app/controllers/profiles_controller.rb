@@ -1,5 +1,3 @@
-# require "nutrition_plan_generator"
-
 class ProfilesController < ApplicationController
   def index
     @profile = current_user.profile
