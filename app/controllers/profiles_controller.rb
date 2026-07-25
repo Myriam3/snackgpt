@@ -1,5 +1,20 @@
 class ProfilesController < ApplicationController
   def index
+    @profile = current_user.profile
+
+    unless @profile
+      redirect_to profile_new_path
+      return
+    end
+
+    @daily_objective = {
+      calories: 2200,
+      protein: 150,
+      carbs: 250,
+      fats: 70
+    }
+
+    @diet_suggestion = "Focus on balanced meals with protein, vegetables, and whole-food carbohydrates."
   end
 
   def new
