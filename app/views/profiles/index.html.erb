@@ -1,4 +1,48 @@
 <div data-controller="clear-session">
-  <h1>Profiles#index</h1>
-  <p>Find me in app/views/profiles/index.html.erb</p>
+  <h1>Your Nutrition Plan</h1>
+
+  <section>
+    <h2>Hello, <%= @profile.name %></h2>
+
+    <p>
+      <strong>Goal:</strong>
+      <%= @profile.goal.humanize %>
+    </p>
+
+    <p>
+      <strong>Activity level:</strong>
+      <%= @profile.activity_level.humanize %>
+    </p>
+  </section>
+
+  <section>
+    <h2>Your Daily Objectives</h2>
+
+    <ul>
+      <li>
+        <strong>Calories:</strong>
+        <%= @daily_objective[:calories] %> kcal
+      </li>
+
+      <li>
+        <strong>Protein:</strong>
+        <%= @daily_objective[:protein] %> g
+      </li>
+
+      <li>
+        <strong>Carbohydrates:</strong>
+        <%= @daily_objective[:carbs] %> g
+      </li>
+
+      <li>
+        <strong>Fats:</strong>
+        <%= @daily_objective[:fats] %> g
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Your Diet Suggestion</h2>
+    <p><%= @diet_suggestion %></p>
+  </section>
 </div>
