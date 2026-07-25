@@ -1,10 +1,17 @@
-// Define variables for your color scheme
+$oat: #F6F1EA;
+$cream: #FFFDF8;
+$cocoa: #342B27;
+$moss: #6E8B65;
+$mint: #CBE6D4;
+$paprika: #D16B52;
+$honey: #E8B44A;
+$berry: #C97972;
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Bootstrap-compatible color names
+$red: $paprika;
+$blue: $moss;
+$yellow: $honey;
+$orange: $paprika;
+$green: $moss;
+$gray: $cocoa;
+$light-gray: $oat;
