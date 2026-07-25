@@ -3,12 +3,12 @@ class ProfilesController < ApplicationController
   end
 
   def new
+    redirect_to profile_path if current_user.profile.present?
     @profile = Profile.new
   end
 
   def create
-    @profile = Profile.new(profile_params)
-    @profile.user = current_user
+    @profile = current_user.build_profile(profile_params)
     if @profile.save
       redirect_to profile_path
     else
