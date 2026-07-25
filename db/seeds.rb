@@ -8,11 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 puts "Cleaning database..."
-UserCookingDevice.destroy_all
-UserAllergy.destroy_all
-
-Profile.destroy_all
-User.destroy_all
 
 Allergy.destroy_all
 CookingDevice.destroy_all
@@ -50,27 +45,25 @@ end
 
 puts "Done!"
 
+User.create(email:"bugsbunnyfitness@example.com",password: "fakiepw123" )
+Profile.create(name:"Bugs Bunny", activity_level:2, gender:0, birthday:1999/01/31, height: 165, weight:60.5, conditions: "diabetic", goal:3, "created_at": nil, "updated_at": nil, "user_id": nil,)
 
-puts "seeding users"
+puts "creating meals.."
 
-User.find_or_create_by!(email: "cammyfitness@example.com") do |user|
-  user.password = "SecurePassword123"
-  user.password_confirmation = "SecurePassword123"
-
-  user.skip_confirmation! if user.respond_to?(:skip_confirmation!)
+[
+  calories = 560, # cals
+  carbs = 100, # grams
+  protein = 30, # grams
+  fats = 14, # grams
+  completed = [true, false],
+  content = "Grilled chicken with cauliflower rice and broccoli",
+  created_at = 2026/07/24,
+  date = 2026/07/25,
+  meal_score = 5,
+  meal_type = "keto-friendly",
+  profile_id = nil,
+  updated_at = 2026/07/25,
+ ["profile_id"], name: "index_meals_on_profile_id"
+] .each do |name|
+  Meal.create!(name: name)
 end
-
-puts "Seeding completed successfully!"
-
-Profile.create!(
-  user: user,
-  gender: 2
-  birthday: Date.new(1995, 5, 14)
-  activity_level 2,
-  diet_goals: "Muscle gain",
-  height: 175.5, # in centimeters
-  weight: 68.0   # in kilograms
-  allergies: "Shellfish"
-)
-
-puts "Successfully seeded 1 user and profile!"
