@@ -8,6 +8,11 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 puts "Cleaning database..."
+UserCookingDevice.destroy_all
+UserAllergy.destroy_all
+
+Profile.destroy_all
+User.destroy_all
 
 Allergy.destroy_all
 CookingDevice.destroy_all
