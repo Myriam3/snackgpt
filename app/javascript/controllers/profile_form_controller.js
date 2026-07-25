@@ -41,6 +41,7 @@ export default class extends Controller {
   previous() {
     if (this.currentStep > 0) {
       this.currentStep--
+      sessionStorage.setItem("profileStep", this.currentStep)
       this.showCurrentStep()
     }
   }
