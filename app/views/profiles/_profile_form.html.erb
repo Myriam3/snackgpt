@@ -1,0 +1,61 @@
+<div data-controller="profile-form">
+  <%= simple_form_for profile, url: profile_path do |f| %>
+    <div data-profile-form-target="step">
+      <%= f.input :name, required: true %>
+      <%= f.input :birthday, as: :string, input_html: { type: "date", max: Date.current }, required: true %>
+      <%= f.input :weight, label: "Weight (kg)", required: true, input_html: { min: 1, step: 0.1} %>
+      <%= f.input :height, label: "Height (cm)", required: true, input_html: { min: 1 } %>
+      <%= f.input :gender, required: true, as: :radio_buttons, collection: Profile.genders.keys.map { |g| [g.humanize, g] } %>
+      <%= button_tag "Next", type: "button", data: { action: "profile-form#next" } %>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.association :allergies, as: :check_boxes %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.association :cooking_devices, as: :check_boxes %>
+      <div class="text-danger small d-none"
+          data-profile-form-target="cookingDeviceError">
+        Please select at least one cooking device.
+      </div>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :preferences, placeholder: "e.g. I prefer spicy food, love Japanese cuisine, don't like mushrooms, prefer quick meals under 30 minutes." %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :conditions, placeholder: "e.g. Diabetes, high blood pressure, PCOS, IBS, lactose intolerance, or leave blank if none." %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :activity_level, as: :radio_buttons, collection: Profile.activity_levels.keys.map { |g| [g.humanize, g] }, required: true %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </div>
+    </div>
+    <div data-profile-form-target="step" class="d-none">
+      <%= f.input :goal, as: :radio_buttons, collection: Profile.goals.keys.map { |g| [g.humanize, g] }, required: true %>
+      <div>
+        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
+        <%= f.button :submit, "Finish" %>
+      </div>
+    </div>
+  <% end %>
+</div>
