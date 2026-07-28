@@ -17,6 +17,17 @@ class MealsController < ApplicationController
     @meal = Meal.find(params[:id])
   end
 
+  def create
+    @profile = current_user.profile
+    @meal = @profile.meals.build(meal_params)
+
+    if @meal.save
+      redirect_to meals_path(date: @meal.date)
+    else
+      render :meals, status: :unprocessable_entity
+    end
+  end
+
   def complete
     @profile = current_user.profile
     @daily_objective = current_user.profile.daily_objective
@@ -37,6 +48,18 @@ class MealsController < ApplicationController
   end
 
   private
+
+  def meal_params
+    params.require(:meal).permit(
+      :content,
+      :calories,
+      :protein,
+      :carbs,
+      :fats,
+      :date,
+      :meal_type
+    )
+  end
 
   def daily_meals(date)
     @profile.meals.where(date: date)
