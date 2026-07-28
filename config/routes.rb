@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   # Meals
   get "/meals/", to: "meals#index"
+  get "/meals/:id", to: "meals#show", as: :meal
+  patch "/meals/:id/complete", to: "meals#complete", as: :complete_meal
   get "/profile", to: "profiles#index", as: :profile
   get "/profile/new", to: "profiles#new"
   post "profile", to: "profiles#create"

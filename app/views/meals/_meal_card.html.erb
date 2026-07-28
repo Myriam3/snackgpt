@@ -1,0 +1,37 @@
+<div class="col-md-6 offset-md-3">
+  <li class="my-3">
+    <div class="card">
+      <h3 class="card-header text-center text-white <% if meal.completed %>bg-success<% else %>bg-secondary<% end%>">
+        <%= meal.meal_type.capitalize %>
+      </h3>
+      <div class="card-body">
+        <%
+          max = 100
+          content = meal.content
+          short_content = content[0...max]
+        %>
+
+        <div class="form-check mb-3">
+          <%= simple_form_for meal,
+              url: complete_meal_path(meal),
+              method: :patch,
+              html: { data: { controller: "meals" } } do |f| %>
+            <%= f.input :completed,
+                as: :boolean,
+                input_html: { data: { action: "change->meals#complete" }, id: "meal_#{meal.id}_completed", } %>
+          <% end %>
+          <!--  <input type="checkbox" class="form-check-input" id="mealComplete-<%= meal.id %>" <% if meal.completed %>checked<% end %>>-->
+          <!-- <label class="form-check-label" for="mealComplete-<%= meal.id %>">Complete</label>-->
+        </div>
+        <h4 class="card-title">Meal title (todo)</h4>
+        <p class="card-text"><%= short_content %><% if content.length > 100 %>...<% end %></p>
+        <div class="text-center">
+          <%= link_to "Details", meal_path(meal), class: "btn btn-primary" %>
+        </div>
+      </div>
+      <div class="card-footer text-muted bg-white">
+        <%= render 'meal_objective', meal: meal %>
+      </div>
+    </div>
+  </li>
+</div>

@@ -1,42 +1,35 @@
-<%
-  calories_percent = @total_calories * 100 / @daily_objective.calories
-  protein_percent = @total_protein * 100 / @daily_objective.protein
-  carbs_percent = @total_carbs * 100 / @daily_objective.carbs
-  fats_percent = @total_fats * 100 / @daily_objective.fats
-%>
-
 <div class="container mt-4 bg-white p-4">
   <div class="row">
     <div class="col">
       <h3>Calories</h3>
-      <p class="m-0"><span><%= @total_calories %></span>/<%= @daily_objective.calories %></p>
-      <div class="progress" role="progressbar" aria-label="Calories progress" aria-valuenow="<%= calories_percent %>" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: <%= calories_percent %>%"></div>
+      <p class="m-0"><span><%= @daily_progress[:calories][:total] %></span>/<%= @daily_objective.calories %></p>
+      <div class="progress" role="progressbar" aria-label="Calories progress" aria-valuenow="<%= @daily_progress[:calories][:percent] %>" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: <%= @daily_progress[:calories][:percent] %>%"></div>
       </div>
     </div>
   </div>
   <div class="row gx-3 mt-4">
     <div class="col">
       <h4>Protein</h4>
-      <p class="m-0"><span><%= @total_protein %></span>/<%= @daily_objective.calories %></p>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<%= protein_percent %>" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar flex-row" style="width: <%= protein_percent %>%"></div>
+      <p class="m-0"><span><%= @daily_progress[:protein][:total] %></span>/<%= @daily_objective.protein %></p>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<%= @daily_progress[:protein][:percent] %>" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar flex-row" style="width: <%= @daily_progress[:protein][:percent] %>%"></div>
       </div>
     </div>
 
     <div class="col">
       <h4>Carbs</h4>
-      <p class="m-0"><span><%= @total_carbs %></span>/<%= @daily_objective.carbs %></p>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<%= carbs_percent %>" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: <%= carbs_percent %>%"></div>
+      <p class="m-0"><span><%= @daily_progress[:carbs][:total] %></span>/<%= @daily_objective.carbs %></p>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<%= @daily_progress[:carbs][:percent] %>" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: <%= @daily_progress[:carbs][:percent] %>%"></div>
       </div>
     </div>
 
     <div class="col">
       <h4>Fats</h4>
-      <p class="m-0"><span><%= @total_fats %></span>/<%= @daily_objective.fats %></p>
-      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<%= fats_percent %>" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: <%= fats_percent %>%"></div>
+      <p class="m-0"><span><%= @daily_progress[:fats][:total] %></span>/<%= @daily_objective.fats %></p>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="<%= @daily_progress[:fats][:percent] %>" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: <%= @daily_progress[:fats][:percent] %>%"></div>
       </div>
     </div>
   </div>
