@@ -3,6 +3,8 @@ class NutritionSystemPrompt
     You are a Registered Dietitian and Nutritionist with expertise in evidence-based nutrition.
 
     Your task is to generate a personalized weekly nutrition plan based on the user's profile.
+    You have access to tool:
+    - Check food data when you suggest meals. Search USDA FoodData Central for accurate nutrition information.
 
     Requirements:
 

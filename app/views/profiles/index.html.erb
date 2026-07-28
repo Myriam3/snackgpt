@@ -15,38 +15,27 @@
     </p>
   </section>
 
-  <section>
-    <h2>Your Daily Objectives</h2>
+  <%= turbo_stream_from @profile %>
+  <div id="nutrition_plan">
+    <% if @profile.daily_objective.present? %>
+      <%= render "nutrition_plan",
+      daily_objective: @profile.daily_objective,
+      meals: @profile.meals %>
+    <% else %>
+      <div class="text-center py-5">
+        <p>Generating your nutrition plan...</p>
+        <p>This usually takes around 15-30 seconds.</p>
+      </div>
+    <% end %>
+  </div>
 
-    <ul>
-      <li>
-        <strong>Calories:</strong>
-        <%= @response["daily_objectives"]["calories"] %> kcal
-      </li>
-
-      <li>
-        <strong>Protein:</strong>
-        <%= @response["daily_objectives"]["protein_g"] %> g
-      </li>
-
-      <li>
-        <strong>Carbohydrates:</strong>
-        <%= @response["daily_objectives"]["carbs_g"] %> g
-      </li>
-
-      <li>
-        <strong>Fats:</strong>
-        <%= @response["daily_objectives"]["fat_g"] %> g
-      </li>
-    </ul>
-  </section>
-
-  <section>
+  <%# <section>
     <h2>Your Diet Suggestion</h2>
-    <p><%= @response["nutrition_summary"] %></p>
-  </section>
+    <p><%= @nutrition_plan["nutrition_summary"] %></p>
+  </section> %>
   <div>
     <%= @response %>
+    <%= @nutrition_plan %>
   </div>
 </div>
 <% content_for :title, "Today | SnackGPT" %>
@@ -57,28 +46,28 @@
   objective_cards = [
     {
       label: "Calories",
-      value: @response["daily_objectives"]["calories"],
+      # value: @response["daily_objectives"]["calories"],
       unit: "kcal",
       icon: "🔥",
       accent: "paprika"
     },
     {
       label: "Protein",
-      value: @response["daily_objectives"]["protein"],
+      # value: @response["daily_objectives"]["protein"],
       unit: "g",
       icon: "💪",
       accent: "moss"
     },
     {
       label: "Carbs",
-      value: @response["daily_objectives"]["carbs"],
+      # value: @response["daily_objectives"]["carbs"],
       unit: "g",
       icon: "🌾",
       accent: "honey"
     },
     {
       label: "Fats",
-      value: @response["daily_objectives"]["fats"],
+      # value: @response["daily_objectives"]["fats"],
       unit: "g",
       icon: "💧",
       accent: "mint"
