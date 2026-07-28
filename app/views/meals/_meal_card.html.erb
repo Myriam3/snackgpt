@@ -20,13 +20,11 @@
                 as: :boolean,
                 input_html: { data: { action: "change->meals#complete" }, id: "meal_#{meal.id}_completed" } %>
           <% end %>
-          <!--  <input type="checkbox" class="form-check-input" id="mealComplete-<%= meal.id %>" <% if meal.completed %>checked<% end %>>-->
-          <!-- <label class="form-check-label" for="mealComplete-<%= meal.id %>">Complete</label>-->
         </div>
         <h4 class="card-title">Meal <%= meal.id %> title (todo)</h4>
         <p class="card-text"><%= short_content %><% if content.length > 100 %>...<% end %></p>
         <div class="text-center">
-          <%= link_to "Details", meal_path(meal), class: "btn btn-primary" %>
+          <%= link_to "Details", meal_path(meal), data: { turbo_frame: "_top" }, class: "btn btn-primary" %>
         </div>
       </div>
       <div class="card-footer text-muted bg-white">

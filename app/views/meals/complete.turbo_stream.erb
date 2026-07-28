@@ -1,11 +1,17 @@
-<%= turbo_stream.replace "daily_objective" do %>
-  <%= turbo_frame_tag "daily_objective" do %>
-    <%= render "shared/daily_objective" %>
+<%= turbo_stream.replace "daily_progress" do %>
+  <%= turbo_frame_tag "daily_progress" do %>
+    <%= render "shared/daily_progress" %>
   <% end %>
 <% end %>
 
 <%= turbo_stream.replace dom_id(@meal) do %>
   <%= turbo_frame_tag dom_id(@meal) do %>
     <%= render "meal_card", meal: @meal %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "meal_completed" do %>
+  <%= turbo_frame_tag "meal_completed" do %>
+    <% if @meal.completed %><span class="badge text-bg-success rounded">Completed</span><% end %>
   <% end %>
 <% end %>

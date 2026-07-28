@@ -1,6 +1,6 @@
 class MealsController < ApplicationController
-  before_action :set_profile, only: %i[index create complete]
-  before_action :set_daily_objective, only: %i[index complete]
+  before_action :set_profile, only: %i[index create complete show]
+  before_action :set_daily_objective, only: %i[index complete show]
 
   # Daily meals, objectives & progress
   def index
