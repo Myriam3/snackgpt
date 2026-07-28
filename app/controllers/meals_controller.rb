@@ -1,24 +1,21 @@
 class MealsController < ApplicationController
+  before_action :set_profile, only: %i[index create complete]
+  before_action :set_daily_objective, only: %i[index complete]
+
+  # Daily meals, objectives & progress
   def index
-    @profile = current_user.profile
-
-    # Date
     @date = params[:date].present? ? Date.parse(params[:date]) : Date.today
-
-    # Meals
-    @meals = daily_meals(@date)
-
-    # Daily objective / progress
-    @daily_objective = @profile.daily_objective
+    @meals = daily_meals(@date).order(meal_type: :asc)
     @daily_progress = daily_progress(@meals, @daily_objective)
   end
 
+  # Show one meal
   def show
     @meal = Meal.find(params[:id])
   end
 
+  # Create a new meal
   def create
-    @profile = current_user.profile
     @meal = @profile.meals.build(meal_params)
 
     if @meal.save
@@ -28,15 +25,12 @@ class MealsController < ApplicationController
     end
   end
 
+  # Complete a meal
   def complete
-    @profile = current_user.profile
-    @daily_objective = current_user.profile.daily_objective
     @meal = Meal.find(params[:id])
 
     if @meal.update(completed: params[:meal][:completed])
-      @daily_objective = @profile.daily_objective
-      meals = daily_meals(@meal.date)
-      @daily_progress = daily_progress(meals, @daily_objective)
+      @daily_progress = daily_progress(daily_meals(@meal.date), @daily_objective)
 
       respond_to do |format|
         format.turbo_stream
@@ -49,6 +43,17 @@ class MealsController < ApplicationController
 
   private
 
+  # Set user profile
+  def set_profile
+    @profile = current_user.profile
+  end
+
+  # Set daily objective
+  def set_daily_objective
+    @daily_objective = @profile.daily_objective
+  end
+
+  # Meal params
   def meal_params
     params.require(:meal).permit(
       :content,
@@ -61,55 +66,27 @@ class MealsController < ApplicationController
     )
   end
 
+  # Get daily meals
   def daily_meals(date)
     @profile.meals.where(date: date)
   end
 
+  # Calculate daily progress
   def daily_progress(meals, daily_objective)
     completed_meals = meals.where(completed: true)
-    calories = completed_meals.sum(:calories)
-    protein = completed_meals.sum(:protein)
-    carbs = completed_meals.sum(:carbs)
-    fats = completed_meals.sum(:fats)
 
     {
-      calories: {
-        total: calories,
-        percent: percent(calories, daily_objective.calories)
-      },
-      protein: {
-        total: protein,
-        percent: percent(protein, daily_objective.protein)
-      },
-      carbs: {
-        total: carbs,
-        percent: percent(carbs, daily_objective.carbs)
-      },
-      fats: {
-        total: fats,
-        percent: percent(fats, daily_objective.fats)
-      }
+      calories: progress(completed_meals.sum(:calories), daily_objective.calories),
+      protein: progress(completed_meals.sum(:protein), daily_objective.protein),
+      carbs: progress(completed_meals.sum(:carbs), daily_objective.carbs),
+      fats: progress(completed_meals.sum(:fats), daily_objective.fats)
     }
   end
 
-  def meal_progress(meal, daily_objective)
+  def progress(total, objective)
     {
-      calories: {
-        total: meal.calories,
-        percent: percent(meal.calories, daily_objective.calories)
-      },
-      protein: {
-        total: meal.protein,
-        percent: percent(meal.protein, daily_objective.protein)
-      },
-      carbs: {
-        total: meal.carbs,
-        percent: percent(meal.carbs, daily_objective.carbs)
-      },
-      fats: {
-        total: meal.fats,
-        percent: percent(meal.fats, daily_objective.fats)
-      }
+      total: total,
+      percent: percent(total, objective)
     }
   end
 

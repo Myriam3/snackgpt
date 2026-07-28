@@ -15,15 +15,15 @@
           <%= simple_form_for meal,
               url: complete_meal_path(meal),
               method: :patch,
-              html: { data: { controller: "meals" } } do |f| %>
+              html: { data: { controller: "meals" }, autocomplete: "off" } do |f| %>
             <%= f.input :completed,
                 as: :boolean,
-                input_html: { data: { action: "change->meals#complete" }, id: "meal_#{meal.id}_completed", } %>
+                input_html: { data: { action: "change->meals#complete" }, id: "meal_#{meal.id}_completed" } %>
           <% end %>
           <!--  <input type="checkbox" class="form-check-input" id="mealComplete-<%= meal.id %>" <% if meal.completed %>checked<% end %>>-->
           <!-- <label class="form-check-label" for="mealComplete-<%= meal.id %>">Complete</label>-->
         </div>
-        <h4 class="card-title">Meal title (todo)</h4>
+        <h4 class="card-title">Meal <%= meal.id %> title (todo)</h4>
         <p class="card-text"><%= short_content %><% if content.length > 100 %>...<% end %></p>
         <div class="text-center">
           <%= link_to "Details", meal_path(meal), class: "btn btn-primary" %>
