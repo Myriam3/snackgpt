@@ -3,9 +3,7 @@ class MealsController < ApplicationController
     @profile = current_user.profile
 
     # Date
-    @date = Date.today
-    # TODO: select another day
-    @date = Date.new(2026, 7, 23)
+    @date = params[:date].present? ? Date.parse(params[:date]) : Date.today
 
     # Meals
     @meals = daily_meals(@date)
@@ -31,7 +29,7 @@ class MealsController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to meals_path }
+        format.html { redirect_to meals_path(date: @meal.date) }
       end
     else
       head :unprocessable_entity
@@ -41,7 +39,7 @@ class MealsController < ApplicationController
   private
 
   def daily_meals(date)
-    @profile.meals.where("date = '#{date}'")
+    @profile.meals.where(date: date)
   end
 
   def daily_progress(meals, daily_objective)
@@ -67,6 +65,27 @@ class MealsController < ApplicationController
       fats: {
         total: fats,
         percent: percent(fats, daily_objective.fats)
+      }
+    }
+  end
+
+  def meal_progress(meal, daily_objective)
+    {
+      calories: {
+        total: meal.calories,
+        percent: percent(meal.calories, daily_objective.calories)
+      },
+      protein: {
+        total: meal.protein,
+        percent: percent(meal.protein, daily_objective.protein)
+      },
+      carbs: {
+        total: meal.carbs,
+        percent: percent(meal.carbs, daily_objective.carbs)
+      },
+      fats: {
+        total: meal.fats,
+        percent: percent(meal.fats, daily_objective.fats)
       }
     }
   end
