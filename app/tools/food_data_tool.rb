@@ -9,8 +9,8 @@ class FoodDataTool < RubyLLM::Tool
   def execute(query:)
     url = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=#{API_KEY}&query=#{URI.encode_www_form_component(query)}"
 
-    JSON.parse(URI.parse(url).read)
-    response["foods"].first(3).map do |food|
+    response = JSON.parse(URI.parse(url).read)
+    foods = response["foods"].first(3).map do |food|
       {
         description: food["description"],
         nutrients: extract_nutrients(food["foodNutrients"])

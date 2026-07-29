@@ -5,7 +5,7 @@ class GenerateNutritionPlanJob < ApplicationJob
     profile = Profile.find(profile_id)
 
     nutrition_plan = NutritionPlanGenerator.new(profile).call
-    NutritionPlanSaver.new(profile, @nutrition_plan).call
+    NutritionPlanSaver.new(profile, nutrition_plan).call
 
     Turbo::StreamsChannel.broadcast_replace_to(
       profile,

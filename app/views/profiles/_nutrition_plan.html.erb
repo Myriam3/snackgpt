@@ -3,21 +3,29 @@
     <ul>
       <li>
         <strong>Calories:</strong>
-        <%= daily_objectives.calories %> kcal
+        <%= daily_objective.calories %> kcal
       </li>
 
       <li>
         <strong>Protein:</strong>
-        <%= daily_objectives.protein %> g
+        <%= daily_objective.protein %> g
       </li>
 
       <li>
         <strong>Carbohydrates:</strong>
-        <%= daily_objectives.carbs %> g
+        <%= daily_objective.carbs %> g
       </li>
 
       <li>
         <strong>Fats:</strong>
-        <%= daily_objectives.fat %> g
+        <%= daily_objective.fats %> g
       </li>
     </ul>
+  <section>
+    <h2>Your Diet Suggestion</h2>
+    <p><%= daily_objective.nutrition_summary %></p>
+  </section>
+  <div>
+    <%= daily_objective %>
+    <%= meals.map { |meal| meal.id } %>
+  </div>
