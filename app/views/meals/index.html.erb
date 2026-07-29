@@ -13,12 +13,11 @@
   <% end %>
 
   <h2 class="text-center mt-5">Meals</h2>
-
   <% if @meals %>
     <ol class="row list-unstyled">
     <% @meals.each do |meal| %>
       <%= turbo_frame_tag dom_id(meal) do %>
-        <%= render "meal_card", meal: meal %>
+        <%= render "meals/meal_card", meal: meal %>
       <% end %>
     <% end %>
     </ol>

@@ -26,6 +26,9 @@ class NutritionUserPrompt
 
       Cooking Devices:
       #{profile.cooking_devices.pluck(:name).join(', ').presence || 'Unknown'}
+
+      Today:
+      #{Date.current}
     PROMPT
   end
 end

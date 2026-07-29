@@ -6,6 +6,7 @@ class MealsController < ApplicationController
   def index
     @date = params[:date].present? ? Date.parse(params[:date]) : Date.today
     @meals = daily_meals(@date).order(meal_type: :asc)
+    generate_meal_content
     @daily_progress = daily_progress(@meals, @daily_objective)
   end
 
@@ -94,5 +95,11 @@ class MealsController < ApplicationController
     return 0 if objective.zero?
 
     total * 100 / objective
+  end
+
+  def generate_meal_content
+    @meals.where(content: "Recipe will be generated soon.").each do |meal|
+      GenerateMealContentJob.perform_later(meal.id)
+    end
   end
 end

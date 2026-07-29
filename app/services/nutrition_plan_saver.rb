@@ -31,7 +31,8 @@ class NutritionPlanSaver
       profile.meals.create!(
         date: meal["date"],
         meal_type: meal["meal_type"],
-        content: meal["content"],
+        meal_title: meal["meal_title"],
+        content: "Recipe will be generated soon.",
         calories: meal["calories"],
         protein: meal["protein"],
         carbs: meal["carbs"],

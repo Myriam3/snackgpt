@@ -1,6 +1,6 @@
 <div class="container">
   <% if @meal %>
-    <h1 class="text-center mt-5">Meal title (todo)</h1>
+    <h1 class="text-center mt-5"><%= @meal.meal_title %></h1>
     <p class="text-center mb-5">
       <%= @meal.date %>
       <span class="badge text-bg-primary rounded"><%= @meal.meal_type.capitalize %></span>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="mb-5">
-      <%= @meal.content %>
+      <%= @meal.content.html_safe %>
     </div>
 
     <div class="p-3 bg-white rounded">

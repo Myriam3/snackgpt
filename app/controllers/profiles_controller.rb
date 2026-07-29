@@ -1,9 +1,6 @@
 class ProfilesController < ApplicationController
   def index
     @profile = current_user.profile || (redirect_to(profile_new_path) && return)
-    # @response = NutritionPlanGenerator.new(@profile).call
-    # @daily_objectives = @profile.daily_objectives
-    # @meals = @profile.meals
   end
 
   def new
@@ -15,8 +12,6 @@ class ProfilesController < ApplicationController
     @profile = current_user.build_profile(profile_params)
     if @profile.save
       GenerateNutritionPlanJob.perform_later(@profile.id)
-      # nutrition_plan = NutritionPlanGenerator.new(@profile).call
-      # NutritionPlanSaver.new(@profile, nutrition_plan).call
       redirect_to profile_path
     else
       render :new, status: :unprocessable_entity
