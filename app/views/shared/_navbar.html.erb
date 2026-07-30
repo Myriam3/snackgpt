@@ -14,8 +14,7 @@
             <%= image_tag "https://placehold.jp/34/cccccc/ffffff/40x40.png?text=%20", class: "avatar", alt: "Profile" %>
           </a>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <%= link_to "Action", "#", class: "dropdown-item" %>
-            <%= link_to "Another action", "#", class: "dropdown-item" %>
+            <%= link_to "Edit Profile", profile_edit_path(@profile), class: "dropdown-item" %>
             <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
           </div>
         </div>

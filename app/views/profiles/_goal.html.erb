@@ -1,0 +1,4 @@
+<%= f.input :goal,
+                  as: :radio_buttons,
+                  collection: Profile.goals.keys.map { |goal| [goal.humanize, goal] },
+                  required: true %>
