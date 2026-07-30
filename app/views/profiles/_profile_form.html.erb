@@ -1,60 +1,282 @@
-<div data-controller="profile-form">
-  <%= simple_form_for profile, url: profile_path do |f| %>
-    <div data-profile-form-target="step">
-      <%= f.input :name, required: true %>
-      <%= f.input :birthday, as: :string, input_html: { type: "date", max: Date.current }, required: true %>
-      <%= f.input :weight, label: "Weight (kg)", required: true, input_html: { min: 1, step: 0.1} %>
-      <%= f.input :height, label: "Height (cm)", required: true, input_html: { min: 1 } %>
-      <%= f.input :gender, required: true, as: :radio_buttons, collection: Profile.genders.keys.map { |g| [g.humanize, g] } %>
-      <%= button_tag "Next", type: "button", data: { action: "profile-form#next" } %>
+<div class="profile-form" data-controller="profile-form">
+  <% step_titles = [
+    "About you",
+    "Allergies",
+    "Cooking tools",
+    "Preferences",
+    "Health context",
+    "Activity",
+    "Goal"
+  ] %>
+
+  <div class="profile-progress" aria-label="Profile setup progress">
+    <div class="profile-progress__meta">
+      <span data-profile-form-target="stepLabel">Step 1 of 7</span>
+      <span data-profile-form-target="stepTitle">About you</span>
     </div>
-    <div data-profile-form-target="step" class="d-none">
-      <%= f.association :allergies, as: :check_boxes %>
-      <div>
-        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
-        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
-        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+
+    <div
+      class="profile-progress__track"
+      role="progressbar"
+      aria-valuemin="1"
+      aria-valuemax="7"
+      aria-valuenow="1"
+      data-profile-form-target="progressBar">
+      <span data-profile-form-target="progressFill"></span>
+    </div>
+
+    <ol class="profile-progress__steps">
+      <% step_titles.each_with_index do |title, index| %>
+        <li
+          data-profile-form-target="stepDot"
+          data-step-index="<%= index %>">
+          <span class="profile-progress__dot"><%= index + 1 %></span>
+          <span class="profile-progress__name"><%= title %></span>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+
+  <%= simple_form_for profile, url: profile_path, html: { class: "profile-form__fields" } do |f| %>
+    <div
+      class="profile-step"
+      data-profile-form-target="step"
+      data-step-title="About you">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">01</span>
+        <div>
+          <h2>Start with the basics</h2>
+          <p>These details help us understand your starting point.</p>
+        </div>
+      </div>
+
+      <div class="profile-fields profile-fields--two-column">
+        <%= f.input :name, required: true, input_html: { autocomplete: "name" } %>
+
+        <%= f.input :birthday,
+                    as: :string,
+                    input_html: {
+                      type: "date",
+                      max: Date.current,
+                      autocomplete: "bday"
+                    },
+                    required: true %>
+
+        <%= f.input :weight,
+                    label: "Weight (kg)",
+                    required: true,
+                    input_html: { min: 1, step: 0.1 } %>
+
+        <%= f.input :height,
+                    label: "Height (cm)",
+                    required: true,
+                    input_html: { min: 1, step: 1 } %>
+
+        <%= f.input :gender,
+                    required: true,
+                    as: :radio_buttons,
+                    collection: Profile.genders.keys.map { |gender| [gender.humanize, gender] } %>
+      </div>
+
+      <div class="profile-step__actions profile-step__actions--end">
+        <%= button_tag "Next",
+                      type: "button",
+                      class: "profile-button profile-button--primary",
+                      data: { action: "profile-form#next" } %>
       </div>
     </div>
-    <div data-profile-form-target="step" class="d-none">
-      <%= f.association :cooking_devices, as: :check_boxes %>
-      <div class="text-danger small d-none"
-          data-profile-form-target="cookingDeviceError">
+
+    <div
+      class="profile-step d-none"
+      data-profile-form-target="step"
+      data-step-title="Allergies">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">02</span>
+        <div>
+          <h2>Any allergies?</h2>
+          <p>Select everything that applies. You can continue with none selected.</p>
+        </div>
+      </div>
+
+      <%= f.association :allergies,
+                        as: :check_boxes,
+                        label: false,
+                        wrapper_html: { class: "profile-choice-grid" } %>
+
+      <div class="profile-step__actions">
+        <%= button_tag "Back",
+                      type: "button",
+                      class: "profile-button profile-button--secondary",
+                      data: { action: "profile-form#previous" } %>
+
+        <%= button_tag "Next",
+                      type: "button",
+                      class: "profile-button profile-button--primary",
+                      data: { action: "profile-form#next" } %>
+      </div>
+    </div>
+
+    <div
+      class="profile-step d-none"
+      data-profile-form-target="step"
+      data-step-title="Cooking tools">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">03</span>
+        <div>
+          <h2>What can you cook with?</h2>
+          <p>Choose at least one cooking device so we can suggest realistic meals.</p>
+        </div>
+      </div>
+
+      <%= f.association :cooking_devices,
+                        as: :check_boxes,
+                        label: false,
+                        wrapper_html: { class: "profile-choice-grid" } %>
+
+      <p
+        class="profile-form__error d-none"
+        data-profile-form-target="cookingDeviceError">
         Please select at least one cooking device.
-      </div>
-      <div>
-        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
-        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
-      </div>
-    </div>
-    <div data-profile-form-target="step" class="d-none">
-      <%= f.input :preferences, placeholder: "e.g. I prefer spicy food, love Japanese cuisine, don't like mushrooms, prefer quick meals under 30 minutes." %>
-      <div>
-        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
-        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
-        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
-      </div>
-    </div>
-    <div data-profile-form-target="step" class="d-none">
-      <%= f.input :conditions, placeholder: "e.g. Diabetes, high blood pressure, PCOS, IBS, lactose intolerance, or leave blank if none." %>
-      <div>
-        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
-        <%= button_tag "Skip", type: "button", data: { action: "profile-form#next "} %>
-        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+      </p>
+
+      <div class="profile-step__actions">
+        <%= button_tag "Back",
+                      type: "button",
+                      class: "profile-button profile-button--secondary",
+                      data: { action: "profile-form#previous" } %>
+
+        <%= button_tag "Next",
+                      type: "button",
+                      class: "profile-button profile-button--primary",
+                      data: { action: "profile-form#next" } %>
       </div>
     </div>
-    <div data-profile-form-target="step" class="d-none">
-      <%= f.input :activity_level, as: :radio_buttons, collection: Profile.activity_levels.keys.map { |g| [g.humanize, g] }, required: true %>
-      <div>
-        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
-        <%= button_tag "Next", type: "button", data: { action: "profile-form#next "} %>
+
+    <div
+      class="profile-step d-none"
+      data-profile-form-target="step"
+      data-step-title="Preferences">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">04</span>
+        <div>
+          <h2>What do you enjoy?</h2>
+          <p>Tell us about your favorite flavors and snack habits.</p>
+        </div>
+      </div>
+
+      <%= f.input :preferences,
+                  label: "Your preferences",
+                  as: :text,
+                  placeholder: "For example: spicy food, Japanese cuisine, quick meals, no mushrooms...",
+                  input_html: { rows: 5 } %>
+
+      <div class="profile-step__actions">
+        <%= button_tag "Back",
+                      type: "button",
+                      class: "profile-button profile-button--secondary",
+                      data: { action: "profile-form#previous" } %>
+
+        <%= button_tag "Next",
+                      type: "button",
+                      class: "profile-button profile-button--primary",
+                      data: { action: "profile-form#next" } %>
       </div>
     </div>
-    <div data-profile-form-target="step" class="d-none">
-      <%= f.input :goal, as: :radio_buttons, collection: Profile.goals.keys.map { |g| [g.humanize, g] }, required: true %>
-      <div>
-        <%= button_tag "Back", type: "button", data: { action: "profile-form#previous "} %>
-        <%= f.button :submit, "Finish" %>
+
+    <div
+      class="profile-step d-none"
+      data-profile-form-target="step"
+      data-step-title="Health context">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">05</span>
+        <div>
+          <h2>Anything we should know?</h2>
+          <p>Optional context helps us make safer, more useful suggestions.</p>
+        </div>
+      </div>
+
+      <%= f.input :conditions,
+                  label: "Health conditions or dietary context",
+                  as: :text,
+                  placeholder: "For example: PCOS, IBS, lactose intolerance, or leave blank if none.",
+                  input_html: { rows: 5 } %>
+
+      <div class="profile-step__actions">
+        <%= button_tag "Back",
+                      type: "button",
+                      class: "profile-button profile-button--secondary",
+                      data: { action: "profile-form#previous" } %>
+
+        <%= button_tag "Next",
+                      type: "button",
+                      class: "profile-button profile-button--primary",
+                      data: { action: "profile-form#next" } %>
+      </div>
+    </div>
+
+    <div
+      class="profile-step d-none"
+      data-profile-form-target="step"
+      data-step-title="Activity">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">06</span>
+        <div>
+          <h2>How active are you?</h2>
+          <p>Choose the option that best matches your usual routine.</p>
+        </div>
+      </div>
+
+      <%= f.input :activity_level,
+                  as: :radio_buttons,
+                  collection: Profile.activity_levels.keys.map { |level| [level.humanize, level] },
+                  required: true %>
+
+      <div class="profile-step__actions">
+        <%= button_tag "Back",
+                      type: "button",
+                      class: "profile-button profile-button--secondary",
+                      data: { action: "profile-form#previous" } %>
+
+        <%= button_tag "Next",
+                      type: "button",
+                      class: "profile-button profile-button--primary",
+                      data: { action: "profile-form#next" } %>
+      </div>
+    </div>
+
+    <div
+      class="profile-step d-none"
+      data-profile-form-target="step"
+      data-step-title="Goal">
+
+      <div class="profile-step__intro">
+        <span class="profile-step__number">07</span>
+        <div>
+          <h2>What is your main goal?</h2>
+          <p>We’ll use this to personalize your nutrition suggestions.</p>
+        </div>
+      </div>
+
+      <%= f.input :goal,
+                  as: :radio_buttons,
+                  collection: Profile.goals.keys.map { |goal| [goal.humanize, goal] },
+                  required: true %>
+
+      <div class="profile-step__actions">
+        <%= button_tag "Back",
+                      type: "button",
+                      class: "profile-button profile-button--secondary",
+                      data: { action: "profile-form#previous" } %>
+
+        <%= f.button :submit,
+                    "Finish profile",
+                    class: "profile-button profile-button--primary" %>
       </div>
     </div>
   <% end %>

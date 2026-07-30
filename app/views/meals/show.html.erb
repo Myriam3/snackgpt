@@ -1,0 +1,31 @@
+<div class="container">
+  <% if @meal %>
+    <h1 class="text-center mt-5"><%= @meal.meal_title %></h1>
+    <p class="text-center mb-5">
+      <%= @meal.date %>
+      <span class="badge text-bg-primary rounded"><%= @meal.meal_type.capitalize %></span>
+      <%= turbo_frame_tag "meal_completed" do %>
+        <% if @meal.completed %><span class="badge text-bg-success rounded">Completed</span><% end %>
+      <% end %>
+    </p>
+
+    <div class="form-check mb-3">
+      <%= simple_form_for @meal,
+          url: complete_meal_path(@meal),
+          method: :patch,
+          html: { data: { controller: "meals" }, autocomplete: "off" } do |f| %>
+        <%= f.input :completed,
+            as: :boolean,
+            input_html: { data: { action: "change->meals#complete" }, id: "meal_#{@meal.id}_completed" } %>
+      <% end %>
+    </div>
+
+    <div class="mb-5">
+      <%= @meal.content.html_safe %>
+    </div>
+
+    <div class="p-3 bg-white rounded">
+      <%= render 'meal_objective', meal: @meal %>
+    </div>
+  <% end %>
+</div>

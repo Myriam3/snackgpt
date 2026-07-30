@@ -1,0 +1,25 @@
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-cache">
+<% end %>
+
+<div class="container">
+  <h1 class="text-center mt-5 mb-3">Journal: <%= @date %></h1>
+
+  <%= render "shared/date_form" %>
+
+  <h2 class="text-center mt-5">My objectives</h2>
+  <%= turbo_frame_tag "daily_progress" do %>
+    <%= render "shared/daily_progress" %>
+  <% end %>
+
+  <h2 class="text-center mt-5">Meals</h2>
+  <% if @meals %>
+    <ol class="row list-unstyled">
+    <% @meals.each do |meal| %>
+      <%= turbo_frame_tag dom_id(meal) do %>
+        <%= render "meals/meal_card", meal: meal %>
+      <% end %>
+    <% end %>
+    </ol>
+  <% end %>
+</div>

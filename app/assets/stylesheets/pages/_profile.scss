@@ -1,0 +1,301 @@
+.profile-page {
+  min-height: calc(100vh - 72px);
+  padding: 4rem 1.5rem;
+  background: $oat;
+}
+
+.profile-page__container {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.profile-page__header {
+  max-width: 680px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.profile-page__eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: $moss;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.profile-page__header h1 {
+  margin-bottom: 0.75rem;
+  color: $cocoa;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.profile-page__header p {
+  margin: 0;
+  color: rgba($cocoa, 0.7);
+  font-size: 1.05rem;
+}
+
+.profile-form {
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid rgba($cocoa, 0.1);
+  border-radius: 1.5rem;
+  background: $cream;
+  box-shadow: 0 1.5rem 4rem rgba($cocoa, 0.08);
+}
+
+.profile-progress {
+  margin-bottom: 2.5rem;
+}
+
+.profile-progress__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+  color: $moss;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.profile-progress__title {
+  color: rgba($cocoa, 0.65);
+  font-weight: 500;
+}
+
+.profile-progress__track {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: $mint;
+}
+
+.profile-progress__track span {
+  display: block;
+  width: 14.285%;
+  height: 100%;
+  border-radius: inherit;
+  background: $moss;
+  transition: width 250ms ease;
+}
+
+.profile-progress__steps {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-progress__steps li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba($cocoa, 0.45);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.profile-progress__steps li.is-active,
+.profile-progress__steps li.is-complete {
+  color: $moss;
+}
+
+.profile-progress__dot {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border: 1px solid rgba($cocoa, 0.18);
+  border-radius: 50%;
+  background: $cream;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.profile-progress__steps li.is-active .profile-progress__dot {
+  border-color: $moss;
+  background: $moss;
+  color: $cream;
+}
+
+.profile-progress__steps li.is-complete .profile-progress__dot {
+  border-color: $mint;
+  background: $mint;
+  color: $moss;
+}
+
+.profile-step__intro {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.profile-step__number {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: $mint;
+  color: $moss;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.profile-step__intro h2 {
+  margin: 0 0 0.35rem;
+  color: $cocoa;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.profile-step__intro p {
+  margin: 0;
+  color: rgba($cocoa, 0.68);
+}
+
+.profile-fields--two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.25rem;
+}
+
+.profile-form .form-label {
+  margin-bottom: 0.4rem;
+  color: $cocoa;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.profile-form .form-control,
+.profile-form .form-select {
+  min-height: 3rem;
+  border: 1px solid rgba($cocoa, 0.18);
+  border-radius: 0.8rem;
+  background: $cream;
+  color: $cocoa;
+}
+
+.profile-form .form-control:focus,
+.profile-form .form-select:focus {
+  border-color: $moss;
+  box-shadow: 0 0 0 0.2rem rgba($moss, 0.16);
+}
+
+.profile-form .form-check {
+  margin: 0;
+  padding: 0.85rem 1rem 0.85rem 2.1rem;
+  border: 1px solid rgba($cocoa, 0.14);
+  border-radius: 0.85rem;
+  background: $cream;
+}
+
+.profile-form .form-check:has(input:checked) {
+  border-color: $moss;
+  background: rgba($mint, 0.55);
+}
+
+.profile-form .form-check-input {
+  accent-color: $moss;
+}
+
+.profile-form .form-check-label {
+  color: $cocoa;
+  font-size: 0.92rem;
+}
+
+.profile-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.profile-step .form-group {
+  margin-bottom: 1rem;
+}
+
+.profile-step__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.profile-step__actions--end {
+  justify-content: flex-end;
+}
+
+.profile-button {
+  min-height: 3rem;
+  padding: 0.7rem 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.profile-button:hover {
+  transform: translateY(-1px);
+}
+
+.profile-button--primary {
+  background: $moss;
+  color: $cream;
+  box-shadow: 0 0.5rem 1rem rgba($moss, 0.2);
+}
+
+.profile-button--primary:hover {
+  background: darken($moss, 8%);
+  color: $cream;
+}
+
+.profile-button--secondary {
+  border: 1px solid rgba($cocoa, 0.18);
+  background: transparent;
+  color: $cocoa;
+}
+
+.profile-form__error {
+  margin-top: 0.75rem;
+  color: $paprika;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .profile-page {
+    padding: 2rem 1rem;
+  }
+
+  .profile-form {
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .profile-fields--two-column,
+  .profile-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-progress__steps {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .profile-progress__name {
+    display: none;
+  }
+
+  .profile-step__actions {
+    flex-direction: column-reverse;
+  }
+
+  .profile-button {
+    width: 100%;
+  }
+}

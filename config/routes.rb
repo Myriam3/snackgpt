@@ -12,6 +12,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: "pages#home"
+
+  # Meals
+  get "/meals/", to: "meals#index", as: :meals
+  get "/meals/:id", to: "meals#show", as: :meal
+  patch "/meals/:id/complete", to: "meals#complete", as: :complete_meal
+  post "/meals", to: "meals#create"
   get "/profile", to: "profiles#index", as: :profile
   get "/profile/new", to: "profiles#new"
   post "profile", to: "profiles#create"

@@ -1,20 +1,6 @@
 class ProfilesController < ApplicationController
   def index
-    @profile = current_user.profile
-
-    unless @profile
-      redirect_to profile_new_path
-      return
-    end
-
-    @daily_objective = {
-      calories: 2200,
-      protein: 150,
-      carbs: 250,
-      fats: 70
-    }
-
-    @diet_suggestion = "Focus on balanced meals with protein, vegetables, and whole-food carbohydrates."
+    @profile = current_user.profile || (redirect_to(profile_new_path) && return)
   end
 
   def new
@@ -25,6 +11,7 @@ class ProfilesController < ApplicationController
   def create
     @profile = current_user.build_profile(profile_params)
     if @profile.save
+      GenerateNutritionPlanJob.perform_later(@profile.id)
       redirect_to profile_path
     else
       render :new, status: :unprocessable_entity

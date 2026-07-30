@@ -1,2 +1,17 @@
-<h1>Create Your Profile</h1>
-<%= render "profiles/profile_form", profile: @profile %>
+<% content_for :title, "Build your snack profile | SnackGPT" %>
+
+<section class="profile-page">
+  <div class="profile-page__container">
+    <header class="profile-page__header">
+      <span class="profile-page__eyebrow">SnackGPT profile setup</span>
+
+      <h1>Build your snack profile</h1>
+
+      <p>
+        Tell us a little about yourself so we can personalize your plan.
+      </p>
+    </header>
+
+    <%= render "profiles/profile_form", profile: @profile %>
+  </div>
+</section>
