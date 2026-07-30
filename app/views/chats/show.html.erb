@@ -3,9 +3,9 @@
   <div id="chat-window" data-chatbot-target="window" class="chat-window">
     <div class="bot-msg">Hello! How can I help you today?</div>
   </div>
+  <%= simple_form_for @message do |f| %>
+    <%= f.input :content, required: true, placeholder: "type your suggestions here" %>
+    <%= f.button :submit, 'Send', class: 'btn btn-primary' %>
+  <% end %>
 
-  <div class="chat-input-area">
-    <input type="text" id="user-input" data-chatbot-target="input" placeholder="Type a message...">
-    <button type="button" data-action="click#chatbot#send">Send</button>
-  </div>
 </div>

@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   post "profile", to: "profiles#create"
 
   resources :chats, only: [:show]
+  resources :messages, only: [:create]
 
 end

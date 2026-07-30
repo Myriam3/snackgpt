@@ -8,12 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 puts "Cleaning database..."
-UserCookingDevice.destroy_all
-UserAllergy.destroy_all
 
-Profile.destroy_all
 User.destroy_all
-
 Allergy.destroy_all
 CookingDevice.destroy_all
 
@@ -49,3 +45,21 @@ puts "Creating cooking devices..."
 end
 
 puts "Done!"
+
+User.create(email:"bugsbunnyfitness@example.com",password: "fakiepw123" )
+Profile.create(name:"Bugs Bunny", activity_level:2, gender:0, birthday:1999/01/31, height: 165, weight:60.5, conditions: "diabetic", goal:3, "created_at": nil, "updated_at": nil, "user_id": nil,)
+
+puts "creating meals.."
+
+Meal.create(
+  calories: 560, # cals
+  carbs:100, # grams
+  protein: 30, # grams
+  fats:14, # grams
+  completed: false,
+  content: "Grilled chicken with cauliflower rice and broccoli",
+  date: Date.tomorrow,
+  meal_score: 5,
+  meal_type: "keto-friendly",
+  profile_id: 1,
+)
