@@ -5,7 +5,6 @@ class NutritionPlanSaver
   end
 
   def call
-    clear_old_plan
     save_daily_objective
     save_meals
   end
@@ -14,15 +13,7 @@ class NutritionPlanSaver
 
   attr_reader :profile, :nutrition_plan
 
-  def clear_old_plan
-    profile.daily_objective&.destroy
-    profile.meals.destroy_all
-  end
-
   def save_daily_objective
-    # pp nutrition_plan
-    # pp nutrition_plan.class
-    # pp nutrition_plan["daily_objectives"]
     profile.create_daily_objective!(
       calories: nutrition_plan["daily_objectives"]["calories"],
       protein: nutrition_plan["daily_objectives"]["protein_g"],
