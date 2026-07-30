@@ -14,11 +14,15 @@ class NutritionPlanSaver
   attr_reader :profile, :nutrition_plan
 
   def save_daily_objective
+    # pp nutrition_plan
+    # pp nutrition_plan.class
+    # pp nutrition_plan["daily_objectives"]
     profile.create_daily_objective!(
       calories: nutrition_plan["daily_objectives"]["calories"],
       protein: nutrition_plan["daily_objectives"]["protein_g"],
       carbs: nutrition_plan["daily_objectives"]["carbs_g"],
-      fats: nutrition_plan["daily_objectives"]["fat_g"]
+      fats: nutrition_plan["daily_objectives"]["fat_g"],
+      nutrition_summary: nutrition_plan["nutrition_summary"]
     )
   end
 
@@ -27,7 +31,8 @@ class NutritionPlanSaver
       profile.meals.create!(
         date: meal["date"],
         meal_type: meal["meal_type"],
-        content: meal["content"],
+        meal_title: meal["meal_title"],
+        content: "Recipe will be generated soon.",
         calories: meal["calories"],
         protein: meal["protein"],
         carbs: meal["carbs"],

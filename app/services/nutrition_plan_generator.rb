@@ -6,8 +6,8 @@ class NutritionPlanGenerator
   end
 
   def call
-    response = RubyLLM.chat.with_instructions(NutritionSystemPrompt::SYSTEM_PROMPT).ask(user_prompt)
-    JSON.parse(response.content)
+    @response = RubyLLM.chat(model: "gpt-4.1-mini").with_instructions(NutritionSystemPrompt::SYSTEM_PROMPT).with_tool(FoodDataTool).ask(user_prompt)
+    JSON.parse(@response.content)
   end
 
   private
