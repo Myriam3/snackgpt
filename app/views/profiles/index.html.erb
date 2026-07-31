@@ -1,36 +1,35 @@
+<% content_for :title, "Dashboard | SnackGPT" %>
+
 <div data-controller="clear-session">
-  <h1>Your Nutrition Plan</h1>
+  <div class="container">
+    <h1 class="text-center mt-5">Hello, <%= @profile.name %> </h1>
+    <dl>
+        <dt>Goal:</dt>
+        <dd><%= @profile.goal.humanize %></dd>
+        <dt>Activity level:</dt>
+        <dd><%= @profile.activity_level.humanize %></dd>
+    </dl>
 
-  <section>
-    <h2>Hello, <%= @profile.name %></h2>
-
-    <p>
-      <strong>Goal:</strong>
-      <%= @profile.goal.humanize %>
-    </p>
-
-    <p>
-      <strong>Activity level:</strong>
-      <%= @profile.activity_level.humanize %>
-    </p>
-  </section>
-
-  <%= turbo_stream_from @profile %>
-  <div id="nutrition_plan">
-    <% if @profile.daily_objective.present? %>
-      <%= render "nutrition_plan",
-      daily_objective: @profile.daily_objective,
-      meals: @profile.meals %>
-    <% else %>
-      <div class="text-center py-5">
-        <p>Generating your nutrition plan...</p>
-        <p>This usually takes around 1 - 2 minutes.</p>
+    <section>
+      <h2 class="mt-5">Your nutrition plan</h2>
+      <%= turbo_stream_from @profile %>
+      <div id="nutrition_plan">
+        <% if @profile.daily_objective.present? %>
+          <%= render "nutrition_plan",
+          daily_objective: @profile.daily_objective,
+          meals: @profile.meals %>
+        <% else %>
+          <div class="text-center py-5">
+            <p>Generating your nutrition plan...</p>
+            <p>This usually takes around 1 - 2 minutes.</p>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </section>
   </div>
-
 </div>
-<% content_for :title, "Today | SnackGPT" %>
+
+
 
 <%
   first_name = @profile.name.to_s.split.first
