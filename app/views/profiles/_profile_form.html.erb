@@ -105,6 +105,31 @@
                         label: false,
                         wrapper_html: { class: "profile-choice-grid" } %>
 
+      <div class="profile-custom-option">
+        <label for="custom-allergy-input">
+          Can't find your allergy?
+        </label>
+
+        <div class="profile-custom-option__row">
+          <input
+            id="custom-allergy-input"
+            type="text"
+            class="form-control"
+            placeholder="Add another allergy"
+            data-profile-form-target="customAllergyInput">
+
+          <%= button_tag "Add",
+                        type: "button",
+                        class: "profile-button profile-button--secondary",
+                        data: { action: "profile-form#addAllergy" } %>
+        </div>
+
+        <div
+          class="profile-custom-option__list"
+          data-profile-form-target="customAllergyList">
+        </div>
+      </div>
+
       <div class="profile-step__actions">
         <%= button_tag "Back",
                       type: "button",
@@ -135,6 +160,31 @@
                         as: :check_boxes,
                         label: false,
                         wrapper_html: { class: "profile-choice-grid" } %>
+
+      <div class="profile-custom-option">
+        <label for="custom-cooking-device-input">
+          Can't find your cooking tool?
+        </label>
+
+        <div class="profile-custom-option__row">
+          <input
+            id="custom-cooking-device-input"
+            type="text"
+            class="form-control"
+            placeholder="Add another cooking tool"
+            data-profile-form-target="customCookingDeviceInput">
+
+          <%= button_tag "Add",
+                        type: "button",
+                        class: "profile-button profile-button--secondary",
+                        data: { action: "profile-form#addCookingDevice" } %>
+        </div>
+
+        <div
+          class="profile-custom-option__list"
+          data-profile-form-target="customCookingDeviceList">
+        </div>
+      </div>
 
       <p
         class="profile-form__error d-none"
