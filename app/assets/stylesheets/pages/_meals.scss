@@ -1,0 +1,130 @@
+.meals-page {
+  min-height: calc(100vh - 72px);
+  padding: 2rem 1rem 4rem;
+  background: $oat;
+  color: $cocoa;
+}
+
+.meals-page > h1,
+.meals-page > h2 {
+  color: $cocoa;
+  font-family: $headers-font;
+}
+
+.meals-page > h1 {
+  margin: 1rem 0 1.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+}
+
+.meals-page > h2 {
+  margin: 2.5rem 0 1rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.meals-page form input[type="date"] {
+  min-height: 3rem;
+  border: 1px solid rgba($cocoa, 0.18);
+  border-radius: 0.85rem;
+  background: $cream;
+  color: $cocoa;
+}
+
+.daily-progress {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem !important;
+  border: 1px solid rgba($cocoa, 0.1);
+  border-radius: 1.25rem;
+  background: $cream !important;
+  box-shadow: 0 1rem 2rem rgba($cocoa, 0.05);
+}
+
+.daily-progress h3,
+.daily-progress h4 {
+  color: $cocoa;
+  font-family: $headers-font;
+}
+
+.meals-page .card {
+  overflow: hidden;
+  border: 1px solid rgba($cocoa, 0.12);
+  border-radius: 1.2rem;
+  background: $cream;
+  box-shadow: 0 1rem 2rem rgba($cocoa, 0.06);
+}
+
+.meals-page .card-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba($cocoa, 0.1);
+  font-family: $headers-font;
+}
+
+.meals-page .card-header.bg-secondary {
+  background: $mint !important;
+  color: $cocoa !important;
+}
+
+.meals-page .card-header.bg-success {
+  background: $moss !important;
+  color: $cream !important;
+}
+
+.meals-page .card-body {
+  padding: 1.4rem;
+}
+
+.meals-page .card-title {
+  color: $cocoa;
+  font-family: $headers-font;
+  line-height: 1.2;
+}
+
+.meals-page .card-footer {
+  border-top: 1px solid rgba($cocoa, 0.1);
+  background: $cream !important;
+}
+
+.meals-page .btn-primary {
+  border: 0;
+  border-radius: 999px;
+  background: $moss;
+  color: $cream;
+  font-weight: 700;
+}
+
+.meals-page .btn-primary:hover {
+  background: darken($moss, 8%);
+  color: $cream;
+}
+
+.meals-page .form-check-input {
+  accent-color: $moss;
+}
+
+.meals-page .progress {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: $mint;
+}
+
+.meals-page .progress-bar {
+  border-radius: 999px;
+  background: $moss;
+}
+
+@media (max-width: 700px) {
+  .meals-page {
+    padding: 1.5rem 0.75rem 3rem;
+  }
+
+  .daily-progress {
+    padding: 1rem !important;
+  }
+
+  .meals-page .card-body {
+    padding: 1rem;
+  }
+}
