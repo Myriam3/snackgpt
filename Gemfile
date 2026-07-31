@@ -47,6 +47,7 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem "devise"
 gem "ruby_llm"
+gem "ruby-vips", "~> 2.0"
 
 group :development, :test do
   gem "dotenv-rails"
