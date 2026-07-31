@@ -37,9 +37,25 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+    @profile = current_user.profile || (redirect_to(profile_new_path) && return)
   end
 
   def update
+    @profile = current_user.profile
+    if @profile.update(profile_params)
+      @profile.daily_objective&.destroy
+      @profile.meals.destroy_all
+      GenerateNutritionPlanJob.perform_later(@profile.id)
+      redirect_to profile_path,
+                  notice: "Profile updated successfully."
+      # Turbo::StreamsChannel.broadcast_replace_to(
+      #   @profile,
+      #   target: "nutrition_plan",
+      #   partial: "profiles/nutrition_loading"
+      # )
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private

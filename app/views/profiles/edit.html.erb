@@ -1,2 +1,17 @@
-<h1>Profiles#edit</h1>
-<p>Find me in app/views/profiles/edit.html.erb</p>
+<% content_for :title, "Build your snack profile | SnackGPT" %>
+
+<section class="profile-page">
+  <div class="profile-page__container">
+    <header class="profile-page__header">
+      <span class="profile-page__eyebrow">Edit SnackGPT profile</span>
+
+      <h1>Edit your snack profile</h1>
+
+      <p>
+        Modify your profile so we can update your plan accordingly.
+      </p>
+    </header>
+
+    <%= render "profiles/edit_profile_form", profile: @profile %>
+  </div>
+</section>

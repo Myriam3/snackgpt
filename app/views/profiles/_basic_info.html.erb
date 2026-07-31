@@ -1,0 +1,25 @@
+<%= f.input :name, required: true, input_html: { autocomplete: "name" } %>
+
+<%= f.input :birthday,
+            as: :string,
+            input_html: {
+              type: "date",
+              max: Date.current,
+              autocomplete: "bday"
+            },
+            required: true %>
+
+<%= f.input :weight,
+            label: "Weight (kg)",
+            required: true,
+            input_html: { min: 1, step: 0.1 } %>
+
+<%= f.input :height,
+            label: "Height (cm)",
+            required: true,
+            input_html: { min: 1, step: 1 } %>
+
+<%= f.input :gender,
+            required: true,
+            as: :radio_buttons,
+            collection: Profile.genders.keys.map { |gender| [gender.humanize, gender] } %>

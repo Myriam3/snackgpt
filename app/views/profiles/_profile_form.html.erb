@@ -52,31 +52,7 @@
       </div>
 
       <div class="profile-fields profile-fields--two-column">
-        <%= f.input :name, required: true, input_html: { autocomplete: "name" } %>
-
-        <%= f.input :birthday,
-                    as: :string,
-                    input_html: {
-                      type: "date",
-                      max: Date.current,
-                      autocomplete: "bday"
-                    },
-                    required: true %>
-
-        <%= f.input :weight,
-                    label: "Weight (kg)",
-                    required: true,
-                    input_html: { min: 1, step: 0.1 } %>
-
-        <%= f.input :height,
-                    label: "Height (cm)",
-                    required: true,
-                    input_html: { min: 1, step: 1 } %>
-
-        <%= f.input :gender,
-                    required: true,
-                    as: :radio_buttons,
-                    collection: Profile.genders.keys.map { |gender| [gender.humanize, gender] } %>
+        <%= render "profiles/basic_info", f: f %>
       </div>
 
       <div class="profile-step__actions profile-step__actions--end">
@@ -100,10 +76,7 @@
         </div>
       </div>
 
-      <%= f.association :allergies,
-                        as: :check_boxes,
-                        label: false,
-                        wrapper_html: { class: "profile-choice-grid" } %>
+      <%= render "profiles/allergies", f: f %>
 
       <div class="profile-custom-option">
         <label for="custom-allergy-input">
@@ -156,10 +129,7 @@
         </div>
       </div>
 
-      <%= f.association :cooking_devices,
-                        as: :check_boxes,
-                        label: false,
-                        wrapper_html: { class: "profile-choice-grid" } %>
+      <%= render "profiles/cooking_devices", f: f %>
 
       <div class="profile-custom-option">
         <label for="custom-cooking-device-input">
@@ -218,11 +188,7 @@
         </div>
       </div>
 
-      <%= f.input :preferences,
-                  label: "Your preferences",
-                  as: :text,
-                  placeholder: "For example: spicy food, Japanese cuisine, quick meals, no mushrooms...",
-                  input_html: { rows: 5 } %>
+      <%= render "profiles/preferences", f: f %>
 
       <div class="profile-step__actions">
         <%= button_tag "Back",
@@ -250,11 +216,7 @@
         </div>
       </div>
 
-      <%= f.input :conditions,
-                  label: "Health conditions or dietary context",
-                  as: :text,
-                  placeholder: "For example: PCOS, IBS, lactose intolerance, or leave blank if none.",
-                  input_html: { rows: 5 } %>
+      <%= render "profiles/condition", f: f %>
 
       <div class="profile-step__actions">
         <%= button_tag "Back",
@@ -282,10 +244,7 @@
         </div>
       </div>
 
-      <%= f.input :activity_level,
-                  as: :radio_buttons,
-                  collection: Profile.activity_levels.keys.map { |level| [level.humanize, level] },
-                  required: true %>
+      <%= render "profiles/activity_level", f: f %>
 
       <div class="profile-step__actions">
         <%= button_tag "Back",
@@ -313,10 +272,7 @@
         </div>
       </div>
 
-      <%= f.input :goal,
-                  as: :radio_buttons,
-                  collection: Profile.goals.keys.map { |goal| [goal.humanize, goal] },
-                  required: true %>
+      <%= render "profiles/goal", f: f %>
 
       <div class="profile-step__actions">
         <%= button_tag "Back",
