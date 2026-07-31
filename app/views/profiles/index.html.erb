@@ -11,6 +11,28 @@
     </dl>
 
     <section>
+      <h2 class="text-center mt-5 mb-4">Your progress <br><span><%= @start_date.strftime("%d %b %Y") %> - <% if @end_date == Date.today %>Today<% else %><%= @end_date.strftime("%d %b %Y") %><% end %></span></h2>
+
+      <div class="mb-4 text-center">
+        <%= link_to "7 days",
+            profile_path(range: "week"),
+            class: "btn btn-primary" %>
+
+        <%= link_to "1 month",
+            profile_path(range: "month"),
+            class: "btn btn-primary" %>
+
+        <%= link_to "3 months",
+            profile_path(range: "three_months"),
+            class: "btn btn-primary" %>
+      </div>
+
+      <%= render 'profile_summary' %>
+      <%= render 'profile_calories' %>
+      <%= render 'profile_macro' %>
+    </section>
+
+    <section>
       <h2 class="mt-5">Your nutrition plan</h2>
       <%= turbo_stream_from @profile %>
       <div id="nutrition_plan">
@@ -26,6 +48,8 @@
         <% end %>
       </div>
     </section>
+
+
   </div>
 </div>
 

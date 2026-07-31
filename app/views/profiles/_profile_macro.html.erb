@@ -1,0 +1,81 @@
+<h3 class="mt-4 mb-4">
+  Macro over
+  <%= case @range
+      when "month"
+        "1 month"
+      when "three_months"
+        "3 months"
+      else
+        "7 days"
+      end %>
+</h3>
+
+<div class="row g-3">
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5>Protein</h5>
+
+        <h3>
+          <%= @macro_progress[:protein][:consumed] %>g
+          /
+          <%= @macro_progress[:protein][:goal] %>g
+        </h3>
+
+        <p>
+          <%= @macro_progress[:protein][:percent] %>%
+          of goal
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5>Carbs</h5>
+
+        <h3>
+          <%= @macro_progress[:carbs][:consumed] %>g
+          /
+          <%= @macro_progress[:carbs][:goal] %>g
+        </h3>
+
+        <p>
+          <%= @macro_progress[:carbs][:percent] %>%
+          of goal
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <h5>Fats</h5>
+
+        <h3>
+          <%= @macro_progress[:fats][:consumed] %>g
+          /
+          <%= @macro_progress[:fats][:goal] %>g
+        </h3>
+
+        <p>
+          <%= @macro_progress[:fats][:percent] %>%
+          of goal
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%= pie_chart [
+  ["Protein", @macro_distribution[:Protein]],
+  ["Carbs", @macro_distribution[:Carbs]],
+  ["Fats", @macro_distribution[:Fats]]
+],
+donut: true %>

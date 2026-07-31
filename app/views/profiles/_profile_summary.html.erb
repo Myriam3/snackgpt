@@ -1,0 +1,67 @@
+<h3 class="mt-4 mb-4">Summary</h3>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h4 class="card-title h5">Calories</h4>
+        <p class="h2"><%= @summary[:calories] %> kcal</p>
+        <p class="text-muted mb-0">
+          Goal: <%= @profile.daily_objective.calories %> kcal
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h4 class="card-title h5">Protein</h4>
+        <p class="h2"><%= @summary[:protein] %> g</p>
+        <p class="text-muted mb-0">
+          Goal: <%= @profile.daily_objective.protein %> g
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h4 class="card-title h5">Carbs</h4>
+        <p class="h2"><%= @summary[:carbs] %> g</p>
+        <p class="text-muted mb-0">
+          Goal: <%= @profile.daily_objective.carbs %> g
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h4 class="card-title h5">Fats</h4>
+        <p class="h2"><%= @summary[:fats] %> g</p>
+        <p class="text-muted mb-0">
+          Goal: <%= @profile.daily_objective.fats %> g
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <h4 class="card-title h5">Completed meals</h4>
+        <p class="h2"><%= @summary[:completion] %>%</p>
+        <p class="text-muted mb-0">
+          <%= @summary[:meal_number] %> meals
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

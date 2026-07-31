@@ -1,0 +1,36 @@
+<h3 class="mt-4 mb-4">
+  Calories over
+  <%= case @range
+      when "month"
+        "1 month"
+      when "three_months"
+        "3 months"
+      else
+        "7 days"
+      end %>
+</h3>
+
+<div class="row">
+  <div class="col-md-7">
+    <%= line_chart [
+    {
+      name: "Calories",
+      data: @calorie_stats.map { |stat| [stat[:date], stat[:calories]] }
+    },
+    {
+      name: "Objective",
+      data: @calorie_stats.map { |stat| [stat[:date], stat[:objective]] },
+      points: false
+    }
+  ] %>
+  </div>
+
+  <div class="col-md-5">
+    <%= pie_chart [
+      ["On target #{@calorie_accuracy[:on_target]}%", @calorie_accuracy[:on_target]],
+      ["Below #{@calorie_accuracy[:below]}%", @calorie_accuracy[:below]],
+      ["Above #{@calorie_accuracy[:above]}%", @calorie_accuracy[:above]]
+    ],
+    donut: true %>
+  </div>
+</div>
