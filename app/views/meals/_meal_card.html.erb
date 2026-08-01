@@ -12,12 +12,6 @@
   <div class="meal-card__body">
     <h3><%= meal.meal_title %></h3>
 
-    <% if meal.content.present? %>
-      <p class="meal-card__summary">
-        <%= strip_tags(meal.content).truncate(100) %>
-      </p>
-    <% end %>
-
     <%= simple_form_for meal,
         url: complete_meal_path(meal),
         method: :patch,
