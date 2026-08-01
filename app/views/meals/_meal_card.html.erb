@@ -1,34 +1,36 @@
-<div class="col-md-6 offset-md-3">
-  <li class="my-3">
-    <div class="card">
-      <h3 class="card-header text-center text-white <% if meal.completed %>bg-success<% else %>bg-secondary<% end%>">
-        <%= meal.meal_type.capitalize %>
-      </h3>
-      <div class="card-body">
-        <%
-          max = 100
-          content = meal.content.html_safe
-          short_content = content[0...max]
-        %>
+<div class="meal-card">
+  <div class="meal-card__header">
+    <span class="meal-card__type">
+      <%= meal.meal_type.capitalize %>
+    </span>
 
-        <div class="form-check mb-3">
-          <%= simple_form_for meal,
-              url: complete_meal_path(meal),
-              method: :patch,
-              html: { data: { controller: "meals" }, autocomplete: "off" } do |f| %>
-            <%= f.input :completed,
-                as: :boolean,
-                input_html: { data: { action: "change->meals#complete" }, id: "meal_#{meal.id}_completed" } %>
-          <% end %>
-        </div>
-        <h4 class="card-title"><%= meal.meal_title %></h4>
-        <div class="text-center">
-          <%= link_to "Details", meal_path(meal), data: { turbo_frame: "_top" }, class: "btn btn-primary" %>
-        </div>
-      </div>
-      <div class="card-footer text-muted bg-white">
-        <%= render 'meals/meal_objective', meal: meal %>
-      </div>
+    <% if meal.completed %>
+      <span class="meal-card__status">Completed</span>
+    <% end %>
+  </div>
+
+  <div class="meal-card__body">
+    <h3><%= meal.meal_title %></h3>
+
+    <% if meal.content.present? %>
+      <p class="meal-card__summary">
+        <%= strip_tags(meal.content).truncate(100) %>
+      </p>
+    <% end %>
+
+    <div class="meal-card__footer">
+      <span class="meal-card__calories">
+        <strong><%= meal.calories %></strong> kcal
+      </span>
+
+      <%= link_to "Details",
+                  meal_path(meal),
+                  data: { turbo_frame: "_top" },
+                  class: "meal-card__button" %>
     </div>
-  </li>
+  </div>
+
+  <div class="meal-card__objective">
+    <%= render "meals/meal_objective", meal: meal %>
+  </div>
 </div>
