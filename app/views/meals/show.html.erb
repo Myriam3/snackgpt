@@ -1,31 +1,61 @@
-<div class="container">
+<div class="meal-details-page">
   <% if @meal %>
-    <h1 class="text-center mt-5"><%= @meal.meal_title %></h1>
-    <p class="text-center mb-5">
-      <%= @meal.date %>
-      <span class="badge text-bg-primary rounded"><%= @meal.meal_type.capitalize %></span>
-      <%= turbo_frame_tag "meal_completed" do %>
-        <% if @meal.completed %><span class="badge text-bg-success rounded">Completed</span><% end %>
-      <% end %>
-    </p>
+    <div class="meal-details-shell">
+      <%= link_to "← Back to meals",
+                  meals_path(date: @meal.date),
+                  class: "meal-details__back" %>
 
-    <div class="form-check mb-3">
+      <header class="meal-details__header">
+        <p class="meal-details__eyebrow">
+          <%= @meal.meal_type.capitalize %>
+        </p>
+
+        <h1><%= @meal.meal_title %></h1>
+
+        <p class="meal-details__date">
+          <%= @meal.date.strftime("%A, %B %-d") %>
+        </p>
+
+        <%= turbo_frame_tag "meal_completed" do %>
+          <% if @meal.completed %>
+            <span class="meal-details__status">
+              Completed
+            </span>
+          <% end %>
+        <% end %>
+      </header>
+
       <%= simple_form_for @meal,
           url: complete_meal_path(@meal),
           method: :patch,
-          html: { data: { controller: "meals" }, autocomplete: "off" } do |f| %>
+          html: {
+            data: { controller: "meals" },
+            class: "meal-details__complete-form",
+            autocomplete: "off"
+          } do |f| %>
         <%= f.input :completed,
             as: :boolean,
-            input_html: { data: { action: "change->meals#complete" }, id: "meal_#{@meal.id}_completed" } %>
+            label: @meal.completed ? "Completed - nice work!" : "Mark this meal as eaten",
+            wrapper_html: { class: "meal-details__complete" },
+            input_html: {
+              data: { action: "change->meals#complete" },
+              id: "meal_#{@meal.id}_completed"
+            } %>
       <% end %>
-    </div>
 
-    <div class="mb-5">
-      <%= @meal.content.html_safe %>
-    </div>
+      <section class="meal-details__content">
+        <h2>What to eat</h2>
 
-    <div class="p-3 bg-white rounded">
-      <%= render 'meal_objective', meal: @meal %>
+        <div class="meal-details__content-body">
+          <%= @meal.content.html_safe %>
+        </div>
+      </section>
+
+      <section class="meal-details__nutrition">
+        <h2>Nutrition</h2>
+
+        <%= render "meal_objective", meal: @meal %>
+      </section>
     </div>
   <% end %>
 </div>
