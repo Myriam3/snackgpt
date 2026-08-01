@@ -11,6 +11,8 @@ class ProfilesController < ApplicationController
       @start_date = 3.months.ago.to_date
     end
 
+    return unless @profile.daily_objective
+
     generate_stats(@start_date, @end_date)
   end
 
