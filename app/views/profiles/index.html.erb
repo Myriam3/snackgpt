@@ -71,7 +71,7 @@
         <p class="dashboard-eyebrow">Dashboard</p>
         <h1>Hello, <%= @profile.name %> </h1>
 
-        <section class="dashboard-overview" id="objectives">
+        <section class="dashboard-overview pt-5" id="dashboard">
           <div class="dashboard-progress-card">
             <div class="dashboard-card__heading">
               <h2>Daily progress</h2>
@@ -125,8 +125,8 @@
           </div>
         </section>
 
-        <section id="progress">
-          <h2 class="mt-5">Your progress</h2>
+        <section class="pt-5" id="progress">
+          <h2>Your progress</h2>
 
           <div class="dashboard-range mt-4 mb-5">
             <%= link_to "7 days",
@@ -150,7 +150,7 @@
           <%= render 'profile_macro' %>
         </section>
 
-        <section id="profile">
+        <section id="profile" class="pt-5">
           <h2 class="dashboard-title dashboard-title--profile">Your profile</h2>
 
           <div class="dashboard-grid dashboard-grid--profile mt-4">
@@ -190,18 +190,18 @@
               </div>
             </div>
           </div>
-        </section>
 
-        <div class="dashboard-suggestion mt-5">
-          <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
+          <div class="dashboard-suggestion mt-5">
+            <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
 
-          <div>
-            <p class="dashboard-eyebrow">Your meals suggestions</p>
-            <p class="h2">Add/edit meals</h2>
-          </div>
+            <div>
+              <p class="dashboard-eyebrow">Your meals suggestions</p>
+              <p class="h2">Add/edit meals</h2>
+            </div>
 
-          <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
+            <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
         </div>
+        </section>
       </div>
     </main>
   </div>
