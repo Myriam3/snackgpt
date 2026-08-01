@@ -87,30 +87,30 @@ def generate_previous_meals(user_profile)
   end_date = Date.yesterday
 
   (start_date..end_date).each do |date|
+
     daily_variation = rand(0.7..1.3)
 
-    # 15% chance of brunch instead of breakfast + lunch
-    meals = if rand < 0.15
+    # 10% chance of brunch instead of breakfast + lunch
+    meals = if rand < 0.10
       [
-        { type: :brunch, base: { calories: 900, protein: 50, carbs: 110, fats: 30 } },
-        { type: :snack, base: { calories: 200, protein: 10, carbs: 25, fats: 8 } },
-        { type: :dinner, base: { calories: 550, protein: 40, carbs: 50, fats: 20 } }
+        { type: :brunch, calories: 900, protein: 50, carbs: 110, fats: 30 },
+        { type: :snack, calories: 200, protein: 10, carbs: 25, fats: 8 },
+        { type: :dinner, calories: 550, protein: 40, carbs: 50, fats: 20 }
       ]
     else
       [
-        { type: :breakfast, base: { calories: 400, protein: 25, carbs: 45, fats: 15 } },
-        { type: :lunch, base: { calories: 600, protein: 40, carbs: 70, fats: 20 } },
-        { type: :snack, base: { calories: 200, protein: 10, carbs: 25, fats: 8 } },
-        { type: :dinner, base: { calories: 550, protein: 40, carbs: 50, fats: 20 } }
+        { type: :breakfast, calories: 400, protein: 25, carbs: 45, fats: 15 },
+        { type: :lunch, calories: 600, protein: 40, carbs: 70, fats: 20 },
+        { type: :snack, calories: 200, protein: 10, carbs: 25, fats: 8 },
+        { type: :dinner, calories: 550, protein: 40, carbs: 50, fats: 20 }
       ]
     end
 
-    # 90% of days: all meals completed
-    # 10%: some meals missing
+    # Most days are complete, some days miss meals
     completed_meals = if rand < 0.90
       meals.map { |meal| meal[:type] }
     else
-      meals.sample(rand(2..(meals.length - 1))).map { |meal| meal[:type] }
+      meals.sample(rand(1..meals.length)).map { |meal| meal[:type] }
     end
 
     meals.each do |meal|
@@ -119,6 +119,7 @@ def generate_previous_meals(user_profile)
       Meal.create!(
         profile: user_profile,
         date: date,
+
         completed: completed_meals.include?(meal[:type]),
 
         meal_type: meal[:type],
@@ -126,10 +127,10 @@ def generate_previous_meals(user_profile)
         meal_title: Faker::Food.dish,
         content: "#{Faker::Food.ingredient} with #{Faker::Food.ingredient} and #{Faker::Food.ingredient}",
 
-        calories: (meal[:base][:calories] * daily_variation * meal_variation).round,
-        protein: (meal[:base][:protein] * daily_variation * meal_variation).round,
-        carbs: (meal[:base][:carbs] * daily_variation * meal_variation).round,
-        fats: (meal[:base][:fats] * daily_variation * meal_variation).round,
+        calories: (meal[:calories] * daily_variation * meal_variation).round,
+        protein: (meal[:protein] * daily_variation * meal_variation).round,
+        carbs: (meal[:carbs] * daily_variation * meal_variation).round,
+        fats: (meal[:fats] * daily_variation * meal_variation).round,
 
         meal_score: rand(50..100)
       )
