@@ -1,36 +1,37 @@
-<h3 class="mt-4 mb-4">
-  Calories over
-  <%= case @range
-      when "month"
-        "1 month"
-      when "three_months"
-        "3 months"
-      else
-        "7 days"
-      end %>
-</h3>
+<h3 class="dashboard-title mt-5">Calories</h3>
+<p class="dashboard-eyebrow dashboard-eyebrow--date"><%= @start_date.strftime("%d %b %Y") %> - <% if @end_date == Date.today %>Today<% else %><%= @end_date.strftime("%d %b %Y") %><% end %></p>
 
-<div class="row">
-  <div class="col-md-7">
-    <%= line_chart [
-    {
-      name: "Calories",
-      data: @calorie_stats.map { |stat| [stat[:date], stat[:calories]] }
-    },
-    {
-      name: "Objective",
-      data: @calorie_stats.map { |stat| [stat[:date], stat[:objective]] },
-      points: false
-    }
-  ] %>
+<div class="dashboard-grid dashboard-grid--chart">
+  <div class="dashboard-grid__card">
+    <div class="card h-100">
+      <div class="card-body">
+          <%= line_chart [
+            {
+              name: "Calories",
+              data: @calorie_stats.map { |stat| [stat[:date], stat[:calories]] }
+            },
+            {
+              name: "Objective",
+              data: @calorie_stats.map { |stat| [stat[:date], stat[:objective]] },
+              points: false
+            }
+          ],
+          colors: ["#6E8B65", "#D16B52"] %>
+      </div>
+    </div>
   </div>
 
-  <div class="col-md-5">
-    <%= pie_chart [
-      ["On target #{@calorie_accuracy[:on_target]}%", @calorie_accuracy[:on_target]],
-      ["Below #{@calorie_accuracy[:below]}%", @calorie_accuracy[:below]],
-      ["Above #{@calorie_accuracy[:above]}%", @calorie_accuracy[:above]]
-    ],
-    donut: true %>
+  <div class="dashboard-grid__card">
+    <div class="card h-100">
+      <div class="card-body">
+        <%= pie_chart [
+          ["On target #{@calorie_accuracy[:on_target]}%", @calorie_accuracy[:on_target]],
+          ["Below #{@calorie_accuracy[:below]}%", @calorie_accuracy[:below]],
+          ["Above #{@calorie_accuracy[:above]}%", @calorie_accuracy[:above]]
+        ],
+        donut: true,
+        colors: ["#6E8B65", "#CBE6D4", "#4B5F45"] %>
+      </div>
+    </div>
   </div>
 </div>
