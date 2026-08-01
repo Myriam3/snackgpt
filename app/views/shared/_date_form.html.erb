@@ -1,5 +1,5 @@
 <%= form_with url: meals_path, method: :get, data: { controller: "date-picker" } do |f| %>
-  <%= f.label :date, "Choose a date", class: "form-label" %>
+  <%= f.label :date, "Choose a date", class: "form-label fw-bold" %>
   <%= f.date_field :date,
       value: @date,
       class: "form-control meals-date-form",
