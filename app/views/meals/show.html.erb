@@ -57,11 +57,6 @@
         <%= render "meal_objective", meal: @meal %>
       </section>
 
-      <%= link_to "7 days",
-                meal_chat_path(range: "week", anchor: "progress"),
-                class: @range == "week" ? "btn btn-primary" : "btn btn-secondary"
-      %>
-
       <%= link_to meal_chat_path(@meal),
         class: "dashboard-suggestion mt-5" do %>
           <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
