@@ -1,0 +1,13 @@
+<div class="chat-message chat-message--<%= message.role %>">
+
+  <div class="chat-message__header">
+    <span>
+      <%= message.role == "user" ? "You" : "SnackGPT" %>
+    </span>
+  </div>
+
+  <div class="chat-message__content">
+    <%= simple_format(message.content) %>
+  </div>
+
+</div>

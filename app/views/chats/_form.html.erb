@@ -1,0 +1,14 @@
+<%= form_with model: Message.new,
+              url: meal_chat_path(meal),
+              class: "chat-form" do |f| %>
+
+  <%= f.text_area :content,
+                  rows: 3,
+                  placeholder: "Tell me how you want to change this meal...",
+                  class: "chat-form__input" %>
+
+  <%= f.submit "Send",
+             class: "chat-form__button",
+             data: { disable_with: "Sending..." } %>
+
+<% end %>
