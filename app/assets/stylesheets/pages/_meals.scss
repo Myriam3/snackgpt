@@ -437,3 +437,36 @@
     padding: 1.25rem;
   }
 }
+
+.meal-card__complete-form {
+  margin-top: 1.25rem;
+}
+
+.meal-card__complete {
+  margin: 0;
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 4rem;
+    padding: 0.9rem 1rem;
+    border: 2px solid rgba($moss, 0.35);
+    border-radius: 1rem;
+    background: rgba($mint, 0.6);
+  }
+
+  .form-check-input {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0;
+    accent-color: $moss;
+    cursor: pointer;
+  }
+
+  .form-check-label {
+    color: $cocoa;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
