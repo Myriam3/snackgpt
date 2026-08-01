@@ -2,9 +2,7 @@
      class="chat-message chat-message--<%= message.role %>">
 
   <div class="chat-message__header">
-    <span>
-      <%= message.role == "user" ? "You" : "SnackGPT" %>
-    </span>
+    <%= message.role == "user" ? "You" : "SnackGPT" %>
   </div>
 
   <div class="chat-message__content">

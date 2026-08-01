@@ -12,20 +12,19 @@ class ChatsController < ApplicationController
       role: :user,
       content: message_params[:content]
     )
-    @message.broadcast_append_to(
-      @chat,
-      target: "messages"
-    )
+    # @message.broadcast_append_to(
+    #   @chat,
+    #   target: "messages"
+    # )
 
     GenerateChatReplyJob.perform_later(@chat.id)
-    # redirect_to meal_chat_path(@meal)
-    head :ok
+    redirect_to meal_chat_path(@meal)
   end
 
   private
 
   def set_meal
-    @meal = current_user.profile.meals.find(params[:meal_id])
+    @meal = current_user.profile.meals.find(params[:id])
   end
 
   def set_chat
