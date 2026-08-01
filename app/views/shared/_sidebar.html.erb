@@ -1,0 +1,29 @@
+<aside class="dashboard-sidebar" aria-label="Sidebar menu">
+  <!--<%= link_to profile_path, class: "dashboard-brand" do %>
+    <span class="dashboard-brand__mark" aria-hidden="true">✦</span>
+    <span>SnackGPT</span>
+  <% end %>
+  -->
+
+  <nav class="dashboard-nav">
+    <%= link_to profile_path, class: "dashboard-nav__link is-active" do %>
+      <span aria-hidden="true">⌂</span>
+      <span>Dashboard</span>
+    <% end %>
+
+    <a href="#progress" class="dashboard-nav__link">
+      <span aria-hidden="true">↗</span>
+      <span>Progress</span>
+    </a>
+
+    <a href="#profile" class="dashboard-nav__link">
+      <span aria-hidden="true">○</span>
+      <span>Profile</span>
+    </a>
+
+    <%= link_to meals_path, class: "dashboard-nav__link" do %>
+      <span aria-hidden="true">◌</span>
+      <span>Journal</span>
+    <% end %>
+  </nav>
+</aside>

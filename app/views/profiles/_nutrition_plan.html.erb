@@ -1,32 +1,35 @@
-<h2>Your Daily Objectives</h2>
-
-  <ul>
+<h3 class="card-title text-primary">Daily Objectives</h3>
+<ul class="dashboard-objectives mt-4 mb-5">
     <li>
+      <span class="card-icon card-icon--paprika" aria-hidden="true">🔥</span>
       <strong>Calories:</strong>
       <%= daily_objective.calories %> kcal
     </li>
 
     <li>
+      <span class="card-icon card-icon--moss" aria-hidden="true">💪</span>
       <strong>Protein:</strong>
       <%= daily_objective.protein %> g
     </li>
 
     <li>
+      <span class="card-icon card-icon--honey" aria-hidden="true">🌾</span>
       <strong>Carbohydrates:</strong>
       <%= daily_objective.carbs %> g
     </li>
 
     <li>
+      <span class="card-icon card-icon--mint" aria-hidden="true">🥑</span>
       <strong>Fats:</strong>
       <%= daily_objective.fats %> g
     </li>
   </ul>
-<section>
-  <h2>Your Diet Suggestion</h2>
-  <p><%= daily_objective.nutrition_summary %></p>
-</section>
-<%= link_to "View My Meals", meals_path, class: "btn btn-primary text-white" %>
-<div>
+
+<h3 class="card-title text-primary">Your Diet Suggestion</h3>
+<p><%= daily_objective.nutrition_summary %></p>
+<p class="text-center"><%= link_to "View My Meals", meals_path, class: "btn btn-primary text-white" %></p>
+
+<!-- <div>
   <%= daily_objective %>
   <%= meals.map { |meal| meal.id } %>
-</div>
+</div> -->
