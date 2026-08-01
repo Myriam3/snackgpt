@@ -1,55 +1,58 @@
 <% content_for :title, "Dashboard | SnackGPT" %>
 
-<%
-  objective_cards = [
-    {
-      label: "Calories",
-      # value: @response["daily_objectives"]["calories"],
-      unit: "kcal",
-      icon: "🔥",
-      accent: "paprika"
-    },
-    {
-      label: "Protein",
-      # value: @response["daily_objectives"]["protein"],
-      unit: "g",
-      icon: "💪",
-      accent: "moss"
-    },
-    {
-      label: "Carbs",
-      # value: @response["daily_objectives"]["carbs"],
-      unit: "g",
-      icon: "🌾",
-      accent: "honey"
-    },
-    {
-      label: "Fats",
-      # value: @response["daily_objectives"]["fats"],
-      unit: "g",
-      icon: "🥑",
-      accent: "mint"
-    }
-  ]
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-cache">
+<% end %>
 
-  snacks = [
-    {
-      name: "Apple + almond butter",
-      detail: "320 kcal · 6g protein",
-      icon: "🍎"
-    },
-    {
-      name: "Greek yogurt",
-      detail: "210 kcal · 12g protein",
-      icon: "🥣"
-    },
-    {
-      name: "Trail mix",
-      detail: "280 kcal · 7g protein",
-      icon: "🥜"
-    }
-  ]
-%>
+<% if @profile.daily_objective %>
+    <%
+      daily_objective = @profile.daily_objective
+      meals = @profile.meals.where(date: Date.today)
+      completed_meals = meals.where(completed: true)
+      progress_calories = completed_meals.sum(:calories) * 100 / daily_objective.calories
+      progress_protein = completed_meals.sum(:protein) * 100 / daily_objective.protein
+      progress_carbs = completed_meals.sum(:carbs) * 100 / daily_objective.carbs
+      progress_fats = completed_meals.sum(:fats) * 100 / daily_objective.fats
+    %>
+
+    <%
+      objective_cards = [
+        {
+          label: "Calories",
+          value: @profile.daily_objective.calories,
+          unit: "kcal",
+          icon: "🔥",
+          accent: "paprika"
+        },
+        {
+          label: "Protein",
+          value: @profile.daily_objective.protein,
+          progress: progress_protein,
+          unit: "g",
+          icon: "💪",
+          accent: "moss"
+        },
+        {
+          label: "Carbs",
+          value: @profile.daily_objective.carbs,
+          progress: progress_carbs,
+          unit: "g",
+          icon: "🌾",
+          accent: "honey"
+        },
+        {
+          label: "Fats",
+          value: @profile.daily_objective.fats,
+          progress: progress_fats,
+          unit: "g",
+          icon: "🥑",
+          accent: "mint"
+        }
+      ]
+    %>
+
+
+<% end %>
 
 <div class="dashboard-page">
   <div class="dashboard-shell">
@@ -60,62 +63,62 @@
         <p class="dashboard-eyebrow">Dashboard</p>
         <h1>Hello, <%= @profile.name %> </h1>
 
-        <!--<section class="dashboard-overview" id="dashboard">
-          <div class="dashboard-progress-card">
-            <div class="dashboard-card__heading">
-              <h2>Today's progress</h2>
-              <span><%= Date.today.strftime("%A, %B %-d") %></span>
-            </div>
-
-            <div class="dashboard-progress-card__value">
-              <strong>68%</strong>
-              <span>of your daily goals</span>
-            </div>
-
-            <div
-              class="dashboard-progress-bar"
-              role="progressbar"
-              aria-label="Daily nutrition progress"
-              aria-valuenow="68"
-              aria-valuemin="0"
-              aria-valuemax="100">
-              <span style="width: 68%"></span>
-            </div>
-          </div>
-
-          <div class="dashboard-objectives-card">
-            <div class="dashboard-card__heading">
-              <h2>Today’s objectives</h2>
-              <span>Daily targets</span>
-            </div>
-
-            <div class="dashboard-objectives-grid">
-              <% objective_cards.each do |card| %>
-                <article class="dashboard-stat-card">
-                  <span
-                    class="dashboard-stat-card__icon dashboard-stat-card__icon--<%= card[:accent] %>"
-                    aria-hidden="true">
-                    <%= card[:icon] %>
-                  </span>
-
-                  <p><%= card[:label] %></p>
-
-                  <strong>
-                    <%= number_with_delimiter(card[:value]) %>
-                    <small><%= card[:unit] %></small>
-                  </strong>
-
-                  <div class="dashboard-stat-card__bar">
-                    <span></span>
-                  </div>
-                </article>
-              <% end %>
-            </div>
-          </div>
-        </section>
-        -->
-
         <% if @profile.daily_objective %>
+          <section class="dashboard-overview" id="dashboard">
+            <div class="dashboard-progress-card">
+              <div class="dashboard-card__heading">
+                <h2>Today's progress</h2>
+                <span><%= Date.today.strftime("%A, %B %-d") %></span>
+              </div>
+
+              <div class="dashboard-progress-card__value">
+                <strong><%= progress_calories %>%</strong>
+                <span>of your daily goals</span>
+              </div>
+
+              <div
+                class="dashboard-progress-bar"
+                role="progressbar"
+                aria-label="Daily nutrition progress"
+                aria-valuenow="<%= progress_calories %>"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <span style="width: <%= progress_calories %>%"></span>
+              </div>
+            </div>
+
+            <div class="dashboard-objectives-card">
+              <div class="dashboard-card__heading">
+                <h2>Today’s objectives</h2>
+                <span>Daily targets</span>
+              </div>
+
+              <div class="dashboard-objectives-grid">
+                <% objective_cards.each do |card| %>
+                  <article class="dashboard-stat-card">
+                    <span
+                      class="dashboard-stat-card__icon dashboard-stat-card__icon--<%= card[:accent] %>"
+                      aria-hidden="true">
+                      <%= card[:icon] %>
+                    </span>
+
+                    <p><%= card[:label] %></p>
+
+                    <strong>
+                      <%= number_with_delimiter(card[:value]) %>
+                      <small><%= card[:unit] %></small>
+                    </strong>
+
+                    <div class="dashboard-stat-card__bar">
+                      <span style="width: <%= card[:progress]%>%"></span>
+                    </div>
+                  </article>
+                <% end %>
+              </div>
+            </div>
+          </section>
+
+
           <section class="pt-5" id="progress">
             <h2>Your progress</h2>
 

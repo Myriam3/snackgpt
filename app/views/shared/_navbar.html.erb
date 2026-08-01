@@ -5,9 +5,25 @@
       <span>SnackGPT</span>
     <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <%= link_to profile_path,
+          class: "nav-link #{'active' if request.path.include?("/profile")}",
+          data: { scrollnav_target: "progress" } do %>
+            <span aria-hidden="true">↗</span>
+            <span>Dashboard</span>
+        <% end %>
+        <%= link_to meals_path,
+          class: "nav-link #{'active' if request.path.include?("/meals")}",
+          data: { scrollnav_target: "progress" } do %>
+            <span aria-hidden="true">🍽</span>
+            <span>Journal</span>
+        <% end %>
+      </div>
+    </div>
 
     <% if user_signed_in? %>
         <div class="dropdown">
@@ -15,8 +31,6 @@
             <%= image_tag "https://placehold.jp/34/CBE6D4/000000/40x40.png?text=%20", class: "avatar", alt: "Profile" %>
           </a>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <%= link_to "Dashboard", profile_path, class: "dropdown-item" %>
-            <%= link_to "Journal", meals_path, class: "dropdown-item" %>
             <%= link_to "Edit Profile", profile_edit_path(@profile), class: "dropdown-item" %>
             <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
           </div>
