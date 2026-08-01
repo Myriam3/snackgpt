@@ -3,23 +3,52 @@
 <% end %>
 
 <div class="container meals-page">
-  <h1 class="text-center mt-5 mb-3">Journal: <%= @date %></h1>
+  <header class="meals-page__header">
+    <div>
+      <p class="meals-page__eyebrow">SnackGPT journal</p>
+      <h1>Today's meals</h1>
+      <p class="meals-page__date">
+        <%= @date.strftime("%A, %B %-d") %>
+      </p>
+    </div>
 
-  <%= render "shared/date_form" %>
+    <div class="meals-page__date-picker">
+      <%= render "shared/date_form" %>
+    </div>
+  </header>
 
-  <h2 class="text-center mt-5">My objectives</h2>
-  <%= turbo_frame_tag "daily_progress" do %>
-    <%= render "shared/daily_progress" %>
-  <% end %>
+  <div class="meals-page__layout">
+    <section class="meals-page__objectives">
+      <div class="meals-page__section-heading">
+        <h2>Daily objectives</h2>
+        <span>Today</span>
+      </div>
 
-  <h2 class="text-center mt-5">Meals</h2>
-  <% if @meals %>
-    <ol class="row list-unstyled">
-    <% @meals.each do |meal| %>
-      <%= turbo_frame_tag dom_id(meal) do %>
-        <%= render "meals/meal_card", meal: meal %>
+      <%= turbo_frame_tag "daily_progress" do %>
+        <%= render "shared/daily_progress" %>
       <% end %>
-    <% end %>
-    </ol>
-  <% end %>
+    </section>
+
+    <section class="meals-page__meals">
+      <div class="meals-page__section-heading">
+        <h2>Meals</h2>
+        <span><%= @meals.count %> planned</span>
+      </div>
+
+      <% if @meals.any? %>
+        <div class="meals-list">
+          <% @meals.each do |meal| %>
+            <%= turbo_frame_tag dom_id(meal) do %>
+              <%= render "meals/meal_card", meal: meal %>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="meals-empty">
+          <h3>No meals planned yet</h3>
+          <p>Your meals will appear here once your plan is ready.</p>
+        </div>
+      <% end %>
+    </section>
+  </div>
 </div>
