@@ -9,24 +9,7 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    attributes = profile_params
-
-    custom_allergies = attributes.delete(:custom_allergies)
-    custom_cooking_devices = attributes.delete(:custom_cooking_devices)
-
-    selected_allergy_ids = Array(attributes[:allergy_ids]).map(&:to_s)
-    selected_cooking_device_ids = Array(attributes[:cooking_device_ids]).map(&:to_s)
-
-    custom_allergy_ids = find_or_create_allergies(custom_allergies)
-    custom_cooking_device_ids = find_or_create_cooking_devices(custom_cooking_devices)
-
-    attributes[:allergy_ids] =
-      (selected_allergy_ids + custom_allergy_ids).uniq
-
-    attributes[:cooking_device_ids] =
-      (selected_cooking_device_ids + custom_cooking_device_ids).uniq
-
-    @profile = current_user.build_profile(attributes)
+    @profile = current_user.build_profile(processed_profile_attributes)
 
     if @profile.save
       GenerateNutritionPlanJob.perform_later(@profile.id)
@@ -42,7 +25,8 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = current_user.profile
-    if @profile.update(profile_params)
+
+    if @profile.update(processed_profile_attributes)
       @profile.daily_objective&.destroy
       @profile.meals.destroy_all
       GenerateNutritionPlanJob.perform_later(@profile.id)
@@ -64,7 +48,7 @@ class ProfilesController < ApplicationController
     ids = []
 
     Array(names).each do |name|
-      name = name.to_s.strip
+      name = name.to_s.strip.titleize
       next if name.blank?
 
       allergy = Allergy.where("LOWER(name) = ?", name.downcase).first
@@ -80,7 +64,7 @@ class ProfilesController < ApplicationController
     ids = []
 
     Array(names).each do |name|
-      name = name.to_s.strip
+      name = name.to_s.strip.titleize
       next if name.blank?
 
       cooking_device = CookingDevice.where("LOWER(name) = ?", name.downcase).first
@@ -108,5 +92,26 @@ class ProfilesController < ApplicationController
                     { custom_allergies: [] },
                     { custom_cooking_devices: [] }
                   ])
+  end
+
+  def processed_profile_attributes
+    attributes = profile_params
+
+    custom_allergies = attributes.delete(:custom_allergies)
+    custom_cooking_devices = attributes.delete(:custom_cooking_devices)
+
+    selected_allergy_ids = Array(attributes[:allergy_ids]).map(&:to_s)
+    selected_cooking_device_ids = Array(attributes[:cooking_device_ids]).map(&:to_s)
+
+    custom_allergy_ids = find_or_create_allergies(custom_allergies)
+    custom_cooking_device_ids = find_or_create_cooking_devices(custom_cooking_devices)
+
+    attributes[:allergy_ids] =
+      (selected_allergy_ids + custom_allergy_ids).uniq
+
+    attributes[:cooking_device_ids] =
+      (selected_cooking_device_ids + custom_cooking_device_ids).uniq
+
+    attributes
   end
 end

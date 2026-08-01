@@ -2,3 +2,27 @@
                         as: :check_boxes,
                         label: false,
                         wrapper_html: { class: "profile-choice-grid" } %>
+<div class="profile-custom-option">
+  <label for="custom-cooking-device-input">
+    Can't find your cooking tool?
+  </label>
+
+  <div class="profile-custom-option__row">
+    <input
+      id="custom-cooking-device-input"
+      type="text"
+      class="form-control"
+      placeholder="Add another cooking tool"
+      data-profile-form-target="customCookingDeviceInput">
+
+    <%= button_tag "Add",
+                  type: "button",
+                  class: "profile-button profile-button--secondary",
+                  data: { action: "profile-form#addCookingDevice" } %>
+  </div>
+
+  <div
+    class="profile-custom-option__list"
+    data-profile-form-target="customCookingDeviceList">
+  </div>
+</div>
