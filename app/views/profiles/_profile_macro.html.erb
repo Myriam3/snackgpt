@@ -1,0 +1,81 @@
+<% if @macro_distribution %>
+  <h3 class="dashboard-title mt-5">Macro</h3>
+  <p class="dashboard-eyebrow dashboard-eyebrow--date"><%= @start_date.strftime("%d %b %Y") %> - <% if @end_date == Date.today %>Today<% else %><%= @end_date.strftime("%d %b %Y") %><% end %></p>
+
+  <div class="dashboard-grid dashboard-grid--macro">
+    <div class="dashboard-grid__card">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--moss" aria-hidden="true">💪 </span>Protein</h4>
+
+          <p class="h4">
+            <%= @macro_progress[:protein][:consumed] %>g
+            /
+            <%= @macro_progress[:protein][:goal] %>g
+          </p>
+
+          <p class="text-muted mb-0">
+            <%= @macro_progress[:protein][:percent] %>%
+            of goal
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-grid__card">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--honey" aria-hidden="true">🌾</span>Carbs</h4>
+
+          <p class="h4">
+            <%= @macro_progress[:carbs][:consumed] %>g
+            /
+            <%= @macro_progress[:carbs][:goal] %>g
+          </p>
+
+          <p class="text-muted mb-0">
+            <%= @macro_progress[:carbs][:percent] %>%
+            of goal
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-grid__card">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--mint" aria-hidden="true">🥑</span>Fats</h4>
+
+          <p class="h4">
+            <%= @macro_progress[:fats][:consumed] %>g
+            /
+            <%= @macro_progress[:fats][:goal] %>g
+          <p>
+
+          <p class="text-muted mb-0">
+            <%= @macro_progress[:fats][:percent] %>%
+            of goal
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid dashboard-grid--chart mt-3">
+    <div class="dashboard-grid__card">
+      <div class="card h-100">
+        <div class="card-body">
+            <%= pie_chart [
+              ["Protein", @macro_distribution[:Protein]],
+              ["Carbs", @macro_distribution[:Carbs]],
+              ["Fats", @macro_distribution[:Fats]]
+            ],
+            donut: true,
+            colors: ["#C97972", "#E8B44A", "#CBE6D4"] %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

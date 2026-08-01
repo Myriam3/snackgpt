@@ -1,0 +1,69 @@
+<% if @summary %>
+  <h3 class="dashboard-title mt-5">Summary</h3>
+  <p class="dashboard-eyebrow dashboard-eyebrow--date"><%= @start_date.strftime("%d %b %Y") %> - <% if @end_date == Date.today %>Today<% else %><%= @end_date.strftime("%d %b %Y") %><% end %></p>
+
+  <div class="dashboard-grid dashboard-grid--summary">
+    <div class="dashboard-grid__card dashboard-grid__card--meals">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title">Completed meals</h4>
+          <p class="h3 text-primary fw-bold"><%= @summary[:completion] %>%</p>
+          <p class="text-muted mb-0">
+            <%= @summary[:meal_number] %> meals
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid__card dashboard-grid__card--cal">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--paprika" aria-hidden="true">🔥</span> Calories</h4>
+          <p class="h3 text-primary fw-bold"><%= @summary[:calories] %> kcal</p>
+          <p class="text-muted mb-0">
+            Goal: <%= @profile.daily_objective.calories %> kcal
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-grid__card dashboard-grid__card--macro">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--moss" aria-hidden="true">💪</span>Protein</h4>
+          <p class="h3 text-primary fw-bold"><%= @summary[:protein] %> g</p>
+          <p class="text-muted mb-0">
+            Goal: <%= @profile.daily_objective.protein %> g
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-grid__card dashboard-grid__card--macro">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--honey" aria-hidden="true">🌾</span>Carbs</h4>
+          <p class="h3 text-primary fw-bold"><%= @summary[:carbs] %> g</p>
+          <p class="text-muted mb-0">
+            Goal: <%= @profile.daily_objective.carbs %> g
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-grid__card dashboard-grid__card--macro">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <h4 class="card-title"><span class="card-icon card-icon--mint" aria-hidden="true">🥑</span>Fats</h4>
+          <p class="h3 text-primary fw-bold"><%= @summary[:fats] %> g</p>
+          <p class="text-muted mb-0">
+            Goal: <%= @profile.daily_objective.fats %> g
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
