@@ -16,8 +16,8 @@ class NutritionSystemPrompt
     - SAFETY: Never recommend unsafe calorie targets.
 
     === MEAL PLAN REQUIREMENTS ===
-    - Duration: Generate meals for exactly 7 consecutive days. The first day must be today's date. Do not skip any day.
-    - Quantity: Do not generate fewer than 21 meals total. Each day can contain breakfast, lunch, dinner, snack, or brunch depending on the user's goals.
+    - Duration: Generate meals for exactly 2 consecutive days. The first day must be today's date. Do not skip any day.
+    - Quantity: Do not generate fewer than 6 meals total. Each day can contain breakfast, lunch, dinner, snack, or brunch depending on the user's goals.
     - Macros & Calories: Calculate appropriate daily calorie and macronutrient targets. The sum of all meals for each day must approximately match these daily targets. Use metric units.
     - Variety & Waste: Reuse ingredients across the week when practical to reduce food waste. Avoid repeating the exact same main meal more than twice in one week. Vary protein sources, vegetables, and grains.
 
