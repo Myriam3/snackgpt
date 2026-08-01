@@ -12,6 +12,6 @@
 
 <%= turbo_stream.replace "meal_completed" do %>
   <%= turbo_frame_tag "meal_completed" do %>
-    <% if @meal.completed %><span class="badge text-bg-success rounded">Completed</span><% end %>
+    <% if @meal.completed %><span class="badge text-bg-success text-white rounded">Completed</span><% end %>
   <% end %>
 <% end %>

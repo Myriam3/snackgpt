@@ -56,6 +56,16 @@
 
         <%= render "meal_objective", meal: @meal %>
       </section>
+
+      <%= link_to meal_chat_path(@meal),
+        class: "dashboard-suggestion mt-5" do %>
+          <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
+          <div>
+            <p class="dashboard-eyebrow">Your meals suggestions</p>
+            <p class="h2">Edit meals</p>
+          </div>
+        <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
+    <% end %>
     </div>
   <% end %>
 </div>
