@@ -83,38 +83,55 @@ def generate_previous_meals(user_profile)
 
   puts "creating previous meals.."
 
+  objective = user_profile.daily_objective
+
+  unless objective
+    puts "No daily objective found"
+    return
+  end
+
   start_date = 3.months.ago.to_date
   end_date = Date.yesterday
 
   (start_date..end_date).each do |date|
 
-    daily_variation = rand(0.7..1.3)
+    # Some days have more or fewer calories
+    daily_variation = if rand < 0.15
+      rand(1.3..1.7) # high calorie day
+    elsif rand < 0.30
+      rand(0.7..0.9) # low calorie day
+    else
+      rand(0.85..1.15) # normal day
+    end
 
-    # 10% chance of brunch instead of breakfast + lunch
+    # Meal distribution
     meals = if rand < 0.10
       [
-        { type: :brunch, calories: 900, protein: 50, carbs: 110, fats: 30 },
-        { type: :snack, calories: 200, protein: 10, carbs: 25, fats: 8 },
-        { type: :dinner, calories: 550, protein: 40, carbs: 50, fats: 20 }
+        { type: :brunch, ratio: 0.55 },
+        { type: :snack, ratio: 0.10 },
+        { type: :dinner, ratio: 0.35 }
       ]
     else
       [
-        { type: :breakfast, calories: 400, protein: 25, carbs: 45, fats: 15 },
-        { type: :lunch, calories: 600, protein: 40, carbs: 70, fats: 20 },
-        { type: :snack, calories: 200, protein: 10, carbs: 25, fats: 8 },
-        { type: :dinner, calories: 550, protein: 40, carbs: 50, fats: 20 }
+        { type: :breakfast, ratio: 0.20 },
+        { type: :lunch, ratio: 0.35 },
+        { type: :snack, ratio: 0.10 },
+        { type: :dinner, ratio: 0.35 }
       ]
     end
 
-    # Most days are complete, some days miss meals
+    # Most days complete, some days missing meals
     completed_meals = if rand < 0.90
       meals.map { |meal| meal[:type] }
     else
-      meals.sample(rand(1..meals.length)).map { |meal| meal[:type] }
+      meals.sample(rand(1..meals.length))
+           .map { |meal| meal[:type] }
     end
 
     meals.each do |meal|
       meal_variation = rand(0.85..1.15)
+
+      ratio = meal[:ratio]
 
       Meal.create!(
         profile: user_profile,
@@ -127,10 +144,10 @@ def generate_previous_meals(user_profile)
         meal_title: Faker::Food.dish,
         content: "#{Faker::Food.ingredient} with #{Faker::Food.ingredient} and #{Faker::Food.ingredient}",
 
-        calories: (meal[:calories] * daily_variation * meal_variation).round,
-        protein: (meal[:protein] * daily_variation * meal_variation).round,
-        carbs: (meal[:carbs] * daily_variation * meal_variation).round,
-        fats: (meal[:fats] * daily_variation * meal_variation).round,
+        calories: (objective.calories * ratio * daily_variation * meal_variation).round,
+        protein: (objective.protein * ratio * daily_variation * meal_variation).round,
+        carbs: (objective.carbs * ratio * daily_variation * meal_variation).round,
+        fats: (objective.fats * ratio * daily_variation * meal_variation).round,
 
         meal_score: rand(50..100)
       )
