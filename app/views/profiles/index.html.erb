@@ -115,30 +115,32 @@
         </section>
         -->
 
-        <section class="pt-5" id="progress">
-          <h2>Your progress</h2>
+        <% if @profile.daily_objective %>
+          <section class="pt-5" id="progress">
+            <h2>Your progress</h2>
 
-          <div class="dashboard-range mt-4 mb-5">
-            <%= link_to "7 days",
-                profile_path(range: "week", anchor: "progress"),
-                class: @range == "week" ? "btn btn-primary" : "btn btn-secondary"
-            %>
+            <div class="dashboard-range mt-4 mb-5">
+              <%= link_to "7 days",
+                  profile_path(range: "week", anchor: "progress"),
+                  class: @range == "week" ? "btn btn-primary" : "btn btn-secondary"
+              %>
 
-            <%= link_to "1 month",
-                profile_path(range: "month", anchor: "progress"),
-                class: @range == "month" ? "btn btn-primary" : "btn btn-secondary"
-            %>
+              <%= link_to "1 month",
+                  profile_path(range: "month", anchor: "progress"),
+                  class: @range == "month" ? "btn btn-primary" : "btn btn-secondary"
+              %>
 
-            <%= link_to "3 months",
-                profile_path(range: "three_months", anchor: "progress"),
-                class: @range == "three_months" ? "btn btn-primary" : "btn btn-secondary"
-            %>
-          </div>
+              <%= link_to "3 months",
+                  profile_path(range: "three_months", anchor: "progress"),
+                  class: @range == "three_months" ? "btn btn-primary" : "btn btn-secondary"
+              %>
+            </div>
 
-          <%= render 'profile_summary' %>
-          <%= render 'profile_calories' %>
-          <%= render 'profile_macro' %>
-        </section>
+            <%= render 'profile_summary' %>
+            <%= render 'profile_calories' %>
+            <%= render 'profile_macro' %>
+          </section>
+        <% end %>
 
         <section id="profile" class="pt-5">
           <h2 class="dashboard-title dashboard-title--profile">Your profile</h2>
@@ -181,16 +183,18 @@
             </div>
           </div>
 
-          <div class="dashboard-suggestion mt-5">
-            <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
+          <% if @profile.daily_objective %>
+            <div class="dashboard-suggestion mt-5">
+              <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
 
-            <div>
-              <p class="dashboard-eyebrow">Your meals suggestions</p>
-              <p class="h2">Add/edit meals</h2>
-            </div>
+              <div>
+                <p class="dashboard-eyebrow">Your meals suggestions</p>
+                <p class="h2">Add/edit meals</h2>
+              </div>
 
-            <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
-        </div>
+              <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
+          </div>
+          <% end %>
         </section>
       </div>
     </main>
