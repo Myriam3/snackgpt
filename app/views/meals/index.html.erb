@@ -2,14 +2,18 @@
   <meta name="turbo-cache-control" content="no-cache">
 <% end %>
 
+<% meals_title =
+    if @date == Date.current
+      "Today's meals"
+    else
+      "Meals for #{@date.strftime("%A, %B %-d")}"
+    end %>
+
 <div class="container meals-page">
   <header class="meals-page__header">
     <div>
       <p class="meals-page__eyebrow">SnackGPT journal</p>
-      <h1>Today's meals</h1>
-      <p class="meals-page__date">
-        <%= @date.strftime("%A, %B %-d") %>
-      </p>
+      <h1><%= meals_title %></h1>
     </div>
 
     <div class="meals-page__date-picker">
@@ -21,7 +25,6 @@
     <section class="meals-page__objectives">
       <div class="meals-page__section-heading">
         <h2>Daily objectives</h2>
-        <span>Today</span>
       </div>
 
       <%= turbo_frame_tag "daily_progress" do %>

@@ -18,6 +18,25 @@
       </p>
     <% end %>
 
+    <%= simple_form_for meal,
+        url: complete_meal_path(meal),
+        method: :patch,
+        html: {
+          data: { controller: "meals" },
+          class: "meal-card__complete-form",
+          autocomplete: "off"
+        } do |f| %>
+
+      <%= f.input :completed,
+          as: :boolean,
+          label: meal.completed ? "Completed" : "Mark as eaten",
+          wrapper_html: { class: "meal-card__complete" },
+          input_html: {
+            data: { action: "change->meals#complete" },
+            id: "meal_#{meal.id}_completed"
+          } %>
+    <% end %>
+
     <div class="meal-card__footer">
       <span class="meal-card__calories">
         <strong><%= meal.calories %></strong> kcal
