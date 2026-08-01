@@ -182,8 +182,7 @@
                         meals: @profile.meals %>
                       <% else %>
                       <div class="text-center fw-bold fs-5 text-primary">
-                        <p class="mb-0">Generating your nutrition plan...</p>
-                        <p>This usually takes around 1 - 2 minutes.</p>
+                        <%= render "profiles/nutrition_loading" %>
                       </div>
                       <% end %>
                     </div>

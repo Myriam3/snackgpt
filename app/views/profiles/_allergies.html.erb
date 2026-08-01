@@ -1,0 +1,28 @@
+<%= f.association :allergies,
+                  as: :check_boxes,
+                  label: false,
+                  wrapper_html: { class: "profile-choice-grid" } %>
+<div class="profile-custom-option">
+  <label for="custom-allergy-input">
+    Can't find your allergy?
+  </label>
+
+  <div class="profile-custom-option__row">
+    <input
+      id="custom-allergy-input"
+      type="text"
+      class="form-control"
+      placeholder="Add another allergy"
+      data-profile-form-target="customAllergyInput">
+
+    <%= button_tag "Add",
+                  type: "button",
+                  class: "profile-button profile-button--secondary",
+                  data: { action: "profile-form#addAllergy" } %>
+  </div>
+
+  <div
+    class="profile-custom-option__list"
+    data-profile-form-target="customAllergyList">
+  </div>
+</div>

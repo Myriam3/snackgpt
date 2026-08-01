@@ -20,7 +20,8 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @profile = current_user.build_profile(profile_params)
+    @profile = current_user.build_profile(processed_profile_attributes)
+
     if @profile.save
       GenerateNutritionPlanJob.perform_later(@profile.id)
       redirect_to profile_path
@@ -30,13 +31,63 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+    @profile = current_user.profile || (redirect_to(profile_new_path) && return)
   end
 
   def update
+    @profile = current_user.profile
+
+    if @profile.update(processed_profile_attributes)
+      @profile.daily_objective&.destroy
+      @profile.meals.destroy_all
+      GenerateNutritionPlanJob.perform_later(@profile.id)
+      redirect_to profile_path,
+                  notice: "Profile updated successfully."
+      # Turbo::StreamsChannel.broadcast_replace_to(
+      #   @profile,
+      #   target: "nutrition_plan",
+      #   partial: "profiles/nutrition_loading"
+      # )
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
 
+  def find_or_create_allergies(names)
+    ids = []
+
+    Array(names).each do |name|
+      name = name.to_s.strip.titleize
+      next if name.blank?
+
+      allergy = Allergy.where("LOWER(name) = ?", name.downcase).first
+      allergy ||= Allergy.create!(name: name)
+
+      ids << allergy.id.to_s unless ids.include?(allergy.id.to_s)
+    end
+
+    ids
+  end
+
+  def find_or_create_cooking_devices(names)
+    ids = []
+
+    Array(names).each do |name|
+      name = name.to_s.strip.titleize
+      next if name.blank?
+
+      cooking_device = CookingDevice.where("LOWER(name) = ?", name.downcase).first
+      cooking_device ||= CookingDevice.create!(name: name)
+
+      ids << cooking_device.id.to_s unless ids.include?(cooking_device.id.to_s)
+    end
+
+    ids
+  end
+
+  # Params
   def profile_params
     params.expect(profile: [
                     :name,
@@ -49,10 +100,13 @@ class ProfilesController < ApplicationController
                     :preferences,
                     :conditions,
                     { allergy_ids: [] },
-                    { cooking_device_ids: [] }
+                    { cooking_device_ids: [] },
+                    { custom_allergies: [] },
+                    { custom_cooking_devices: [] }
                   ])
   end
 
+  # Dashboard stats
   def generate_stats(start_date, end_date)
     @summary = summary_between(start_date, end_date)
     @calorie_stats = calorie_stats(start_date, end_date)
@@ -152,5 +206,26 @@ class ProfilesController < ApplicationController
       Carbs: carbs_calories,
       Fats: fats_calories
     }
+  end
+
+  def processed_profile_attributes
+    attributes = profile_params
+
+    custom_allergies = attributes.delete(:custom_allergies)
+    custom_cooking_devices = attributes.delete(:custom_cooking_devices)
+
+    selected_allergy_ids = Array(attributes[:allergy_ids]).map(&:to_s)
+    selected_cooking_device_ids = Array(attributes[:cooking_device_ids]).map(&:to_s)
+
+    custom_allergy_ids = find_or_create_allergies(custom_allergies)
+    custom_cooking_device_ids = find_or_create_cooking_devices(custom_cooking_devices)
+
+    attributes[:allergy_ids] =
+      (selected_allergy_ids + custom_allergy_ids).uniq
+
+    attributes[:cooking_device_ids] =
+      (selected_cooking_device_ids + custom_cooking_device_ids).uniq
+
+    attributes
   end
 end
