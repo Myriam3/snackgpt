@@ -10,10 +10,10 @@
     <div class="row">
       <div class="d-flex p-0">
         <dt class="m-1">Calories:</td>
-        <dd class="m-1"><%= meal.calories %></dd>
+        <dd class="m-1"><%= meal.calories %><small> (<%= calories_percent %>%)</small></dd>
       </div>
       <div class="progress p-0">
-        <div class="progress-bar" role="progressbar" style="width: <%= calories_percent %>%;" aria-valuenow="<%= calories_percent %>" aria-valuemin="0" aria-valuemax="100"><%= calories_percent %>%</div>
+        <div class="progress-bar" role="progressbar" style="width: <%= calories_percent %>%;" aria-valuenow="<%= calories_percent %>" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
     </div>
     <div class="row mt-3">

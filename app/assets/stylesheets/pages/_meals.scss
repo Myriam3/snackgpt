@@ -74,6 +74,13 @@
   box-shadow: 0 1rem 2rem rgba($cocoa, 0.05);
 }
 
+@media (min-width: 800px) {
+  .meals-page__objectives {
+    position: sticky;
+    top: 20px;
+  }
+}
+
 .meals-page__section-heading {
   display: flex;
   align-items: center;
@@ -438,10 +445,6 @@
   }
 }
 
-.meal-card__complete-form {
-  margin-top: 1.25rem;
-}
-
 .meal-card__complete {
   margin: 0;
 
@@ -603,4 +606,13 @@
     flex-direction: column;
     align-items: stretch;
   }
+/******************/
+.meals-date-form {
+  max-width: 200px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.meal-card__complete-form {
+  margin-top: 1.25rem;
 }
