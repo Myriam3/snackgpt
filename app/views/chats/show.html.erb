@@ -1,0 +1,25 @@
+<% content_for :title, "Chat about #{@meal.meal_title} | SnackGPT" %>
+
+<section class="meal-chat-page">
+  <div class="meal-chat-page__container">
+
+    <%= render "meals/meal_card", meal: @meal %>
+
+    <div class="chat-container">
+
+      <h2>
+        Chat about this meal
+      </h2>
+
+      <%= turbo_stream_from @chat %>
+
+      <div id="messages" class="chat-messages">
+        <%= render @messages %>
+      </div>
+
+      <%= render "chats/form", chat: @chat, meal: @meal %>
+
+    </div>
+
+  </div>
+</section>
