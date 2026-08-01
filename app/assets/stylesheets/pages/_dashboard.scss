@@ -2,7 +2,207 @@
   min-height: calc(100vh - 72px);
   padding: 2rem 1.5rem 4rem;
   background: $oat;
+
+  h1 {
+    margin: 0 0 2rem;
+    font-size: clamp(2.5rem, 4vw, 3rem);
+  }
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(2.5rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  h3 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+
+  }
+
+  .dashboard-title {
+    border-top: 1px solid rgba(52, 43, 39, 0.1);
+    padding-top: 0.75rem;
+
+    &--profile {
+      border-top: 0;
+    }
+  }
 }
+
+.dashboard-eyebrow {
+  margin: 0 0 0.4rem;
+  color: $moss;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  &--date {
+    font-size: .9rem;
+    margin: 0.4rem 0 1rem;
+  }
+}
+
+.dashboard-range {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+
+  .btn-primary {
+    color: #fff;
+    font-weight: 700;
+    border-radius: 0.75rem;
+  }
+
+  .btn-secondary {
+    background: rgba($mint, 0.55);
+    color: $moss;
+    font-weight: 700;
+    border: 1px solid rgba(52, 43, 39, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 1rem 2rem rgba(52, 43, 39, 0.05);
+  }
+}
+
+.dashboard-grid {
+    $root: &;
+    display: grid;
+    gap: 0.75rem;
+
+    &--summary {
+      grid-template-columns: repeat(6, 1fr);
+
+      #{$root}__card {
+      grid-column: span 2;
+
+        &--cal,
+        &--meals {
+          grid-column: span 3;
+        }
+
+        &--meals {
+          .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+        }
+      }
+
+      .card-title {
+        font-size: 1.4rem;
+      }
+    }
+
+    &--macro {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--chart {
+      #{$root}__card {
+        min-width: 0;
+      }
+
+      .card-body {
+        width: 100%;
+      }
+    }
+
+    &--profile {
+      grid-template-columns: repeat(2, 1fr);
+
+      .card-title {
+        font-size: 1.4rem;
+      }
+
+      #{$root}__card {
+        &--result {
+          grid-column: span 2;
+        }
+      }
+
+      .btn-primary {
+        border: 0;
+        border-radius: 999px;
+        background: $moss;
+        color: $cream;
+        font-weight: 700;
+      }
+    }
+
+    .text-muted {
+      color: rgba($cocoa, 0.55);
+    }
+  }
+
+@media (max-width: 800px) {
+  .dashboard-grid {
+    .card-body {
+      padding: 0.75rem;
+    }
+
+    .card-icon {
+      display: flex;
+      margin: 0 auto 0.4rem;
+    }
+
+    &--profile {
+      .card-icon {
+        display: inline-flex;
+        margin: 0 0 0.4rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 800px) {
+
+}
+
+@media (min-width: 1200px) {
+  .dashboard-grid {
+    $root: &;
+    width: 100%;
+
+    &--summary {
+      grid-template-columns: repeat(8, 1fr);
+
+      #{$root}__card {
+        &--meals {
+          grid-column: span 2;
+          grid-row: span 2;
+        }
+
+        &--cal {
+          grid-column: 3 / -1;
+        }
+      }
+    }
+
+    &--chart {
+      grid-template-columns: repeat(2, 1fr);
+
+      #{$root}__card {
+        &:only-child {
+          grid-column: span 2;
+        }
+      }
+
+    }
+  }
+}
+
+.dashboard-objectives {
+  display: grid;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+/****************************************/
 
 .dashboard-shell {
   display: grid;
@@ -43,6 +243,8 @@
 .dashboard-nav {
   display: grid;
   gap: 0.5rem;
+  position: sticky;
+  top: 20px;
 }
 
 .dashboard-nav__link {
@@ -85,14 +287,7 @@
   color: rgba($cocoa, 0.68);
 }
 
-.dashboard-eyebrow {
-  margin: 0 0 0.4rem;
-  color: $moss;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
+
 
 .dashboard-avatar {
   display: grid;
@@ -312,6 +507,7 @@
   gap: 1rem;
   padding: 1.25rem;
   background: rgba($mint, 0.55);
+  text-decoration: none;
 }
 
 .dashboard-suggestion__icon {

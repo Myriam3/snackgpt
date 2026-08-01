@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
+  <div class="container">
     <%= link_to "/", class: "navbar-brand" do %>
-      <%= image_tag "https://placehold.jp/34/cccccc/ffffff/200x80.png?text=SnackGPT", size: "100x40", alt: "SnackGPT" %>
+      <span class="navbar-brand__mark" aria-hidden="true">✦</span>
+      <span>SnackGPT</span>
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,11 +12,12 @@
     <% if user_signed_in? %>
         <div class="dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://placehold.jp/34/cccccc/ffffff/40x40.png?text=%20", class: "avatar", alt: "Profile" %>
+            <%= image_tag "https://placehold.jp/34/CBE6D4/000000/40x40.png?text=%20", class: "avatar", alt: "Profile" %>
           </a>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <%= link_to "Action", "#", class: "dropdown-item" %>
-            <%= link_to "Another action", "#", class: "dropdown-item" %>
+            <%= link_to "Dashboard", profile_path, class: "dropdown-item" %>
+            <%= link_to "Journal", meals_path, class: "dropdown-item" %>
+            <%= link_to "Edit Profile", profile_edit_path(@profile), class: "dropdown-item" %>
             <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
           </div>
         </div>

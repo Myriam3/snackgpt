@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "chats/show"
+  get "chats/create"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -21,4 +23,8 @@ Rails.application.routes.draw do
   get "/profile", to: "profiles#index", as: :profile
   get "/profile/new", to: "profiles#new"
   post "profile", to: "profiles#create"
+  get "profile/edit", to: "profiles#edit"
+  patch "profile", to: "profiles#update"
+  get "meals/:id/chat", to: "chats#show", as: :meal_chat
+  post "meals/:id/chat", to: "chats#create"
 end

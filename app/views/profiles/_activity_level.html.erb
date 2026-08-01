@@ -1,0 +1,4 @@
+<%= f.input :activity_level,
+                  as: :radio_buttons,
+                  collection: Profile.activity_levels.keys.map { |level| [level.humanize, level] },
+                  required: true %>

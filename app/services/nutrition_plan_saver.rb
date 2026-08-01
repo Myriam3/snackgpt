@@ -14,9 +14,6 @@ class NutritionPlanSaver
   attr_reader :profile, :nutrition_plan
 
   def save_daily_objective
-    # pp nutrition_plan
-    # pp nutrition_plan.class
-    # pp nutrition_plan["daily_objectives"]
     profile.create_daily_objective!(
       calories: nutrition_plan["daily_objectives"]["calories"],
       protein: nutrition_plan["daily_objectives"]["protein_g"],

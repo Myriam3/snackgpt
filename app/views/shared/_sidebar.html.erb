@@ -1,0 +1,29 @@
+<aside class="dashboard-sidebar" aria-label="Sidebar menu" data-controller="scrollnav">
+  <nav class="dashboard-nav">
+    <%= link_to profile_path(anchor: "dashboard"),
+      class: "dashboard-nav__link is-active",
+      data: { scrollnav_target: "dashboard" } do %>
+        <span aria-hidden="true">⌂</span>
+        <span>Dashboard</span>
+    <% end %>
+
+    <%= link_to profile_path(anchor: "progress"),
+        class: "dashboard-nav__link",
+        data: { scrollnav_target: "progress" } do %>
+          <span aria-hidden="true">↗</span>
+          <span>Progress</span>
+    <% end %>
+
+    <%= link_to profile_path(anchor: "profile"),
+        class: "dashboard-nav__link",
+        data: { scrollnav_target: "profile" } do %>
+          <span aria-hidden="true">○</span>
+          <span>Profile</span>
+    <% end %>
+
+    <%= link_to meals_path, class: "dashboard-nav__link" do %>
+      <span aria-hidden="true">🍽</span>
+      <span>Journal</span>
+    <% end %>
+  </nav>
+</aside>

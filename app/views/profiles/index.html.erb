@@ -1,40 +1,6 @@
-<div data-controller="clear-session">
-  <h1>Your Nutrition Plan</h1>
-
-  <section>
-    <h2>Hello, <%= @profile.name %></h2>
-
-    <p>
-      <strong>Goal:</strong>
-      <%= @profile.goal.humanize %>
-    </p>
-
-    <p>
-      <strong>Activity level:</strong>
-      <%= @profile.activity_level.humanize %>
-    </p>
-  </section>
-
-  <%= turbo_stream_from @profile %>
-  <div id="nutrition_plan">
-    <% if @profile.daily_objective.present? %>
-      <%= render "nutrition_plan",
-      daily_objective: @profile.daily_objective,
-      meals: @profile.meals %>
-    <% else %>
-      <div class="text-center py-5">
-        <p>Generating your nutrition plan...</p>
-        <p>This usually takes around 1 - 2 minutes.</p>
-      </div>
-    <% end %>
-  </div>
-
-</div>
-<% content_for :title, "Today | SnackGPT" %>
+<% content_for :title, "Dashboard | SnackGPT" %>
 
 <%
-  first_name = @profile.name.to_s.split.first
-
   objective_cards = [
     {
       label: "Calories",
@@ -61,7 +27,7 @@
       label: "Fats",
       # value: @response["daily_objectives"]["fats"],
       unit: "g",
-      icon: "💧",
+      icon: "🥑",
       accent: "mint"
     }
   ]
@@ -85,142 +51,148 @@
   ]
 %>
 
-<section class="dashboard-page">
+<div class="dashboard-page">
   <div class="dashboard-shell">
-    <aside class="dashboard-sidebar" aria-label="Primary navigation">
-      <%= link_to profile_path, class: "dashboard-brand" do %>
-        <span class="dashboard-brand__mark" aria-hidden="true">✦</span>
-        <span>SnackGPT</span>
-      <% end %>
-
-      <nav class="dashboard-nav">
-        <%= link_to profile_path, class: "dashboard-nav__link is-active" do %>
-          <span aria-hidden="true">⌂</span>
-          <span>Today</span>
-        <% end %>
-
-        <a href="#snacks" class="dashboard-nav__link">
-          <span aria-hidden="true">◌</span>
-          <span>Meals</span>
-        </a>
-
-        <a href="#objectives" class="dashboard-nav__link">
-          <span aria-hidden="true">↗</span>
-          <span>Progress</span>
-        </a>
-
-        <%= link_to profile_path, class: "dashboard-nav__link" do %>
-          <span aria-hidden="true">○</span>
-          <span>Profile</span>
-        <% end %>
-      </nav>
-    </aside>
+    <%= render 'shared/sidebar' %>
 
     <main class="dashboard-content">
-      <header class="dashboard-header">
-        <div>
-          <p class="dashboard-eyebrow">Your snack dashboard</p>
-          <h1>Good morning, <%= first_name %></h1>
-          <p>Small choices add up. Let’s make today a good one.</p>
-        </div>
+      <div data-controller="clear-session">
+        <p class="dashboard-eyebrow">Dashboard</p>
+        <h1>Hello, <%= @profile.name %> </h1>
 
-        <div class="dashboard-avatar" aria-hidden="true">
-          <%= first_name.first&.upcase %>
-        </div>
-      </header>
+        <!--<section class="dashboard-overview" id="dashboard">
+          <div class="dashboard-progress-card">
+            <div class="dashboard-card__heading">
+              <h2>Today's progress</h2>
+              <span><%= Date.today.strftime("%A, %B %-d") %></span>
+            </div>
 
-      <section class="dashboard-overview" id="objectives">
-        <div class="dashboard-progress-card">
-          <div class="dashboard-card__heading">
-            <h2>Daily progress</h2>
-            <span>Today</span>
+            <div class="dashboard-progress-card__value">
+              <strong>68%</strong>
+              <span>of your daily goals</span>
+            </div>
+
+            <div
+              class="dashboard-progress-bar"
+              role="progressbar"
+              aria-label="Daily nutrition progress"
+              aria-valuenow="68"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              <span style="width: 68%"></span>
+            </div>
           </div>
 
-          <div class="dashboard-progress-card__value">
-            <strong>68%</strong>
-            <span>of your daily goals</span>
+          <div class="dashboard-objectives-card">
+            <div class="dashboard-card__heading">
+              <h2>Today’s objectives</h2>
+              <span>Daily targets</span>
+            </div>
+
+            <div class="dashboard-objectives-grid">
+              <% objective_cards.each do |card| %>
+                <article class="dashboard-stat-card">
+                  <span
+                    class="dashboard-stat-card__icon dashboard-stat-card__icon--<%= card[:accent] %>"
+                    aria-hidden="true">
+                    <%= card[:icon] %>
+                  </span>
+
+                  <p><%= card[:label] %></p>
+
+                  <strong>
+                    <%= number_with_delimiter(card[:value]) %>
+                    <small><%= card[:unit] %></small>
+                  </strong>
+
+                  <div class="dashboard-stat-card__bar">
+                    <span></span>
+                  </div>
+                </article>
+              <% end %>
+            </div>
+          </div>
+        </section>
+        -->
+
+        <section class="pt-5" id="progress">
+          <h2>Your progress</h2>
+
+          <div class="dashboard-range mt-4 mb-5">
+            <%= link_to "7 days",
+                profile_path(range: "week", anchor: "progress"),
+                class: @range == "week" ? "btn btn-primary" : "btn btn-secondary"
+            %>
+
+            <%= link_to "1 month",
+                profile_path(range: "month", anchor: "progress"),
+                class: @range == "month" ? "btn btn-primary" : "btn btn-secondary"
+            %>
+
+            <%= link_to "3 months",
+                profile_path(range: "three_months", anchor: "progress"),
+                class: @range == "three_months" ? "btn btn-primary" : "btn btn-secondary"
+            %>
           </div>
 
-          <div
-            class="dashboard-progress-bar"
-            role="progressbar"
-            aria-label="Daily nutrition progress"
-            aria-valuenow="68"
-            aria-valuemin="0"
-            aria-valuemax="100">
-            <span style="width: 68%"></span>
-          </div>
-        </div>
+          <%= render 'profile_summary' %>
+          <%= render 'profile_calories' %>
+          <%= render 'profile_macro' %>
+        </section>
 
-        <div class="dashboard-objectives-card">
-          <div class="dashboard-card__heading">
-            <h2>Today’s objectives</h2>
-            <span>Daily targets</span>
-          </div>
+        <section id="profile" class="pt-5">
+          <h2 class="dashboard-title dashboard-title--profile">Your profile</h2>
 
-          <div class="dashboard-objectives-grid">
-            <% objective_cards.each do |card| %>
-              <article class="dashboard-stat-card">
-                <span
-                  class="dashboard-stat-card__icon dashboard-stat-card__icon--<%= card[:accent] %>"
-                  aria-hidden="true">
-                  <%= card[:icon] %>
-                </span>
-
-                <p><%= card[:label] %></p>
-
-                <strong>
-                  <%= number_with_delimiter(card[:value]) %>
-                  <small><%= card[:unit] %></small>
-                </strong>
-
-                <div class="dashboard-stat-card__bar">
-                  <span></span>
+          <div class="dashboard-grid dashboard-grid--profile mt-4">
+            <div class="dashboard-grid__card">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <h3 class="card-title text-primary">Goal</h3>
+                  <p><%= @profile.goal.humanize %></p>
                 </div>
-              </article>
-            <% end %>
+              </div>
+            </div>
+            <div class="dashboard-grid__card">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <h3 class="card-title text-primary">Activity level</h3>
+                  <p><%= @profile.activity_level.humanize %></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-grid__card dashboard-grid__card--result">
+              <div class="card">
+                <div class="card-body">
+                  <%= turbo_stream_from @profile %>
+                    <div id="nutrition_plan">
+                      <% if @profile.daily_objective.present? %>
+                        <%= render "nutrition_plan",
+                        daily_objective: @profile.daily_objective,
+                        meals: @profile.meals %>
+                      <% else %>
+                      <div class="text-center fw-bold fs-5 text-primary">
+                        <%= render "profiles/nutrition_loading" %>
+                      </div>
+                      <% end %>
+                    </div>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <div class="dashboard-suggestion mt-5">
+            <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
+
+            <div>
+              <p class="dashboard-eyebrow">Your meals suggestions</p>
+              <p class="h2">Add/edit meals</h2>
+            </div>
+
+            <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
         </div>
-      </section>
-
-      <section class="dashboard-section" id="snacks">
-        <div class="dashboard-section__heading">
-          <div>
-            <p class="dashboard-eyebrow">Snack smarter</p>
-            <h2>Today's snacks</h2>
-          </div>
-
-          <a href="#snacks">View all</a>
-        </div>
-
-        <div class="dashboard-snacks-grid">
-          <% snacks.each do |snack| %>
-            <article class="dashboard-snack-card">
-              <span class="dashboard-snack-card__icon" aria-hidden="true">
-                <%= snack[:icon] %>
-              </span>
-
-              <h3><%= snack[:name] %></h3>
-              <p><%= snack[:detail] %></p>
-
-              <span class="dashboard-snack-card__status">
-                Planned
-              </span>
-            </article>
-          <% end %>
-        </div>
-      </section>
-
-      <section class="dashboard-suggestion">
-        <span class="dashboard-suggestion__icon" aria-hidden="true">✦</span>
-
-        <div>
-          <p class="dashboard-eyebrow">Your snack suggestion</p>
-          <h2><%= @diet_suggestion %></h2>
-        </div>
-
-        <span class="dashboard-suggestion__arrow" aria-hidden="true">→</span>
-      </section>
+        </section>
+      </div>
     </main>
   </div>
-</section>
+</div>
