@@ -474,6 +474,7 @@
   }
 }
 
+<<<<<<< HEAD
 /******************/
 .meals-date-form {
   max-width: 200px;
@@ -484,6 +485,8 @@
 .meal-card__complete-form {
   margin-top: 1.25rem;
 }
+=======
+>>>>>>> 8aca3ee96eb993b48c79f0aec68652276afd08aa
 .meal-chat-page {
   min-height: calc(100vh - 72px);
   padding: 2rem 1rem 4rem;
@@ -616,4 +619,16 @@
     flex-direction: column;
     align-items: stretch;
   }
+<<<<<<< HEAD
+=======
+/******************/
+.meals-date-form {
+  max-width: 200px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.meal-card__complete-form {
+  margin-top: 1.25rem;
+>>>>>>> 8aca3ee96eb993b48c79f0aec68652276afd08aa
 }
