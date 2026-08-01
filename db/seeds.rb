@@ -51,15 +51,15 @@ Profile.create(name:"Bugs Bunny", activity_level:2, gender:0, birthday:1999/01/3
 
 puts "creating meals.."
 
-Meal.create(
-  calories: 560, # cals
-  carbs:100, # grams
-  protein: 30, # grams
-  fats:14, # grams
-  completed: false,
-  content: "Grilled chicken with cauliflower rice and broccoli",
-  date: Date.tomorrow,
-  meal_score: 5,
+ Meal.create(
+   calories: 560, # cals
+   carbs:100, # grams
+   protein: 30, # grams
+   fats:14, # grams
+   completed: false,
+   content: "Grilled chicken with cauliflower rice and broccoli",
+   date: Date.tomorrow,
+ meal_score: 5,
   meal_type: "keto-friendly",
   profile_id: 1,
 )
